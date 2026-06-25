@@ -28,3 +28,19 @@ else:
     print(str(age) + "-" + "Young")
 
 print('----------------------------------')
+
+
+print("Given an array of positive integers, return an array of squares")
+
+
+def squareArray(nums):
+    for i in range(len(nums)):
+        nums[i] = nums[i]**2
+    return nums
+
+
+print(squareArray([1, 2, 3, 4, 5]))
+
+seen = set('start')
+print(seen)
+print('f' in seen)
