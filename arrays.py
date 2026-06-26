@@ -44,3 +44,31 @@ print(squareArray([1, 2, 3, 4, 5]))
 seen = set('start')
 print(seen)
 print('f' in seen)
+
+# Return the squares in ascending order from the original array
+# The original array is sorted but can have both negative and positive integers
+
+
+def squares(nums):
+    """
+    The largest square value will be at either end of the nums array since -4**2 is 16 and 4 is 16 on example [-4,1,0,4]
+    Thus, we take the square values at both ends and insert the largest value into a new array (at it's end)
+    """
+    result = [0] * len(nums)
+    right = len(nums) - 1
+    n = len(nums) - 1
+    left = 0
+    while left <= right:
+        squaredLeft = nums[left]**2
+        squaredRight = nums[right]**2
+        if squaredRight > squaredLeft:
+            result[n] = squaredRight
+            right -= 1
+        else:
+            result[n] = squaredLeft
+            left += 1
+        n -= 1
+    return result
+
+
+print(squares([-4, 0, 1, 4, 10]))
