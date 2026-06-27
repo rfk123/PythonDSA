@@ -89,3 +89,17 @@ def printWindows(nums, k):
 
 
 printWindows([1, 30, 20, 1, 2, 3, 40, 14, 16], 3)
+
+
+def reverseListInPlace(nums):
+    # use two pointer solution for O(n) time complexity solution
+    left = 0
+    right = len(nums) - 1
+    while (left < right):
+        nums[left], nums[right] = nums[right], nums[left]
+        left += 1
+        right -= 1
+    return nums
+
+
+print(reverseListInPlace([1, 2, 3, 4, 5, 6, 7, 8, 9]))
