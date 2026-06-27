@@ -103,3 +103,131 @@ def reverseListInPlace(nums):
 
 
 print(reverseListInPlace([1, 2, 3, 4, 5, 6, 7, 8, 9]))
+
+
+def isPalindrome(str):
+    left = 0
+    right = len(str) - 1
+    while (left < right):
+        if str[left] != str[right]:
+            return False
+        left += 1
+        right -= 1
+    return True
+
+
+print(isPalindrome("aabbaa"))
+
+
+def removeDuplicates(nums):
+    if not nums:
+        return 0
+    left = 0
+    right = 0
+    while (right < len(nums)):
+        if nums[right] != nums[left]:
+            left += 1
+            nums[right], nums[left] = nums[left], nums[right]
+        right += 1
+    return nums[:left + 1]
+
+
+print(removeDuplicates([1, 1, 2, 2, 3]))
+
+
+def moveZeroes(nums):
+    if not nums:
+        return 0
+
+    write = 0
+    read = 0
+    while (read < len(nums)):
+        if nums[read] != 0:
+            nums[read], nums[write] = nums[write], nums[read]
+            write += 1
+        read += 1
+    return nums
+
+
+print(moveZeroes([0, 1, 0, 2, 0, 0, 21, 11, 200, 0, 3]))
+
+
+def buildPrefixArray(nums):
+    result = [0]
+    for num in nums:
+        result.append(result[-1] + num)
+    return result
+
+
+print(buildPrefixArray([1, 2, 3, 4, 5, 6, 7, 8]))
+
+
+# find maximum size subarray of size k
+def max_sum_size_k(nums, k):
+    window_sum = 0
+    best = float("-inf")
+    for right in range(len(nums)):
+        window_sum += nums[right]
+        if right >= k:
+            window_sum -= nums[right - k]
+        if right >= k - 1:
+            best = max(best, window_sum)
+    return best
+
+
+print(max_sum_size_k([1, 2, 3, 2, 4, 1, 1], 4))
+
+
+def twoSumBool(nums, target):
+    seen = set()
+    for num in nums:
+        difference = target - num
+        if difference in seen:
+            return True
+        seen.add(num)
+    return False
+
+
+print(twoSumBool([3, 4, 10, 21, 7, 12], 28))
+
+# counts = {}
+# counts["a"] = 2
+# counts["b"] = counts.get("b", 0) + 1
+# del counts["a"]
+# print(counts)
+
+# for key, value in counts.items():
+#     print(key, value)
+
+
+def validAnagram(str1, str2):
+    counts = {}
+    for char in str1:
+        counts[char] = counts.get(char, 0) + 1
+
+    for char in str2:
+        if char not in counts:
+            return False
+
+        counts[char] -= 1
+
+        if counts.get(char) == 0:
+            del counts[char]
+
+    return len(counts) == 0
+
+
+print(validAnagram('csats', 'tacs'))
+
+
+def twoSumDict(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        difference = target - num
+        if difference in seen:
+            return [seen[difference], i]
+        seen[num] = i
+    return []
+
+
+print(twoSumDict([12, 8, 2, 19, 10], 11))
