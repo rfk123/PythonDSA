@@ -231,3 +231,31 @@ def twoSumDict(nums, target):
 
 
 print(twoSumDict([12, 8, 2, 19, 10], 11))
+
+
+def containsDuplicate(nums):
+    if not nums:
+        return False
+    seen = set()
+    for num in nums:
+        if num in seen:
+            return True
+        seen.add(num)
+    return False
+
+
+print(containsDuplicate([]))
+
+
+def two_sum(nums, target):
+    seen = set()
+    for num in nums:
+        difference = target - num
+        if difference in seen:
+            return True
+        seen.add(num)
+
+    return False
+
+
+print(two_sum([9, 19, 29, 30, 8, 11, 18], 27))
