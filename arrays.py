@@ -259,3 +259,4 @@ def two_sum(nums, target):
 
 
 print(two_sum([9, 19, 29, 30, 8, 11, 18], 27))
+print(two_sum([1, 2, 3], 2))
