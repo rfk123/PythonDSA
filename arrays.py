@@ -260,3 +260,9 @@ def two_sum(nums, target):
 
 print(two_sum([9, 19, 29, 30, 8, 11, 18], 27))
 print(two_sum([1, 2, 3], 2))
+
+
+def findClosestNumber(nums: List[int]) -> int:
+    # given a list of integers (negative and positive both possible), return the value of the closest number to 0
+    # if there are multiple options return the largest (the positive)
+    pass
