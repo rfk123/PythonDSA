@@ -262,7 +262,23 @@ print(two_sum([9, 19, 29, 30, 8, 11, 18], 27))
 print(two_sum([1, 2, 3], 2))
 
 
-def findClosestNumber(nums: List[int]) -> int:
-    # given a list of integers (negative and positive both possible), return the value of the closest number to 0
-    # if there are multiple options return the largest (the positive)
-    pass
+def findClosestNumber(nums) -> int:
+    # find and return the closest number to 0 within an integer array containing positive and negative values
+    # if there is a tie between multiple values then just take the greatest value between them
+    # one pass through the array while maintaing a current closest
+    closest = nums[0]
+    for num in nums:
+        if abs(num) < abs(closest):
+            closest = num
+
+    if closest < 0 and abs(closest) in nums:
+        return abs(closest)
+
+    return closest
+
+
+print(findClosestNumber([0, -1, 10, 20, -4, -4, 5]))
+"""
+The time complexity of this program is O(n) because we visit each value in the list at most once
+The space complexity of this program is O(1) because we do not require storing new data in memory
+"""
