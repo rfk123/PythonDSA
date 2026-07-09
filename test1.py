@@ -87,7 +87,29 @@ def is_anagram(s, t):
 
 
 def first_unique_char(s):
-    pass
+    # This function returns the first unique character in string s
+    # Input -> A string
+    # Output -> A string (of size 1)
+    """
+    My first idea allows for a single pass through the string s to find the first unique char occurence.
+    Build out a hashmap that stores the characters and their frequencies from string s.
+    Loop through that hashmap looking for the first key to have a value of exactly 1.
+    Return the character if found. Otherwise, return -1. 
+    """
+    freq = {}
+    for char in s:
+        freq[char] = freq.get(char, 0) + 1
+
+    for key, value in freq.items():
+        if value == 1:
+            return key
+    return -1
+
+
+""" Tests for first_unique_char """
+# 'aass' -> -1
+# '' -> -1
+# 'sassy' -> 'a'
 
 
 def group_anagrams(strs):
