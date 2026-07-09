@@ -53,7 +53,37 @@ def two_sum(nums, target):
 
 
 def is_anagram(s, t):
-    pass
+    # This function is tasked to determine whether or not two strings are anagrams.
+    # Input -> Two strings
+    # Output -> A boolean (True or False)
+    """
+    My first idea allows for a solution that does a single pass of both strings.
+    Create a hashmap and store each character and their frequencies of string s in it.
+    Then go through string t and take away characters from the hashmap until hashmap is empty or t iteration is over.
+    The condition to check for a valid anagram: hashmap is empty  
+    """
+    if len(s) != len(t):
+        return False
+
+    seen = {}
+    for char in s:
+        seen[char] = seen.get(char, 0) + 1
+
+    for char in t:
+        if char not in seen:
+            return False
+
+        seen[char] -= 1
+        if seen[char] == 0:
+            del seen[char]
+
+    return len(seen) == 0
+
+
+""" Tests for is_anagram """
+# '', '' -> True
+# 'teat', 'treat' -> False
+# 'tea', 'eat' -> True
 
 
 def first_unique_char(s):
