@@ -27,7 +27,29 @@ def contains_duplicate(nums) -> bool:
 
 
 def two_sum(nums, target):
-    pass
+    # This function will look for two values (not at the same index) that sum to the target value
+    # Input -> A list of integers (does not have to be sorted and can contain positive or negative integers)
+    # Output -> The indices of both values in a list [first_indice, second_indice]
+    """
+    My first idea is that we can solve this by doing a single pass through the nums list.
+    For this to work, there needs to be a hashmap which will store a past seen value and its index.
+    Iterating through the list, we will look to see if the difference of target - current num is in hashmap or not.
+    If the difference is in the hashmap then return the first and second indices. If not, then place the current num into the hashmap along with its index. 
+    """
+    seen = {}
+    for i, num in enumerate(nums):
+        difference = target - num
+        if difference in seen:
+            return [seen.get(difference), i]
+        seen[num] = i
+    return -1
+
+
+""" Test for two_sum """
+# [], 1 -> -1
+# [1,2], 3 -> [0,1]
+# [-2, 5], 3 -> [0,1]
+# [1,2,3,4,5,6,7], 20 -> -1
 
 
 def is_anagram(s, t):
