@@ -62,3 +62,21 @@ del counts["A"]
 print(len(counts))
 
 # Lets use what we have learned to build a hashmap to store characters and their frequencies given a string
+
+
+def count_frequencies(str):
+    counts = {}
+    for char in str:
+        counts[char] = counts.get(char, 0) + 1
+    pass
+# This function will create a hashmap that, if 'banana' was inputted, would look like {'b' : 1, 'a' : 3, 'n' : 2}
+# What is important to notice about this function is that the .get method does not error if the hashmap does not contain our char
+# Instead it gives the default value 0 which is nice to use when trying to count frequencies
+
+
+""" A Little Bit of Understand On Why Sets and Hashmaps Have Fast Lookups """
+# Sets and dictionaries use hashing which means it takes a value and converts it into a hash code.
+# Essentially hashing just means that the computer takes the requested key and feeds that key into a hash function which converts the key into a consisten unique integer called a hash code
+# Then the computer stores the hashcode within some internal array using a modulo operation hash_code % size_of_array to find an index to store it in.
+# since computers can access any index of a standard array instantly via RAM address calculations, the program jumps directly to that percise memory location to retrieve the data
+# Learn more on hash collisions to find out what happens when two keys create hashcodes that land the same index.
