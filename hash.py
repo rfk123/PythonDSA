@@ -80,3 +80,30 @@ def count_frequencies(str):
 # Then the computer stores the hashcode within some internal array using a modulo operation hash_code % size_of_array to find an index to store it in.
 # since computers can access any index of a standard array instantly via RAM address calculations, the program jumps directly to that percise memory location to retrieve the data
 # Learn more on hash collisions to find out what happens when two keys create hashcodes that land the same index.
+
+
+# Only hashable values can be keys
+# This means that int, str, bool, tuple can be valid keys
+# This means list, dict, set cannot be valid keys
+# Only immutable values can be keys
+
+
+# Lets practice by creating a function contains_duplicate
+def contains_duplicate(str):
+    seen = set()
+    for char in str:
+        if char in seen:
+            return True
+        seen.add(char)
+    return False
+
+
+def contains_nearby_duplicate(nums, k):
+    seen = {}
+    for i, num in enumerate(nums):
+        if num in seen:
+            if i - seen[num] <= k:
+                return True
+        seen[num] = i
+    return False
+# Contains nearby duplicate uses your knowledge of hashmaps and understanding of indice comaprisons
