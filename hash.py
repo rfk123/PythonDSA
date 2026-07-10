@@ -57,7 +57,7 @@ print(counts["a"])
 # If you want to get a value from the hashmap and have a default value instead of error if it doesnt exist then uset .get(,)
 print(counts.get('A', 0))
 # For deleting a value from the hashmap you can use the del keyword
-del counts["A"]
+# del counts["A"]
 # To find the length (size) of a hashmap you can use the built-in len function
 print(len(counts))
 
@@ -107,3 +107,26 @@ def contains_nearby_duplicate(nums, k):
         seen[num] = i
     return False
 # Contains nearby duplicate uses your knowledge of hashmaps and understanding of indice comaprisons
+
+
+# Sliding Window + Set pattern
+
+# I am going to try to write a program to find the longest substring with no repeating characters from a given string and return its length
+def longest_substring_without_repeating(str):
+    window_set = set()
+    n = len(str)
+    right = 0
+    left = 0
+    max_length = 0
+    while right < n:
+        while str[right] in window_set:
+            window_set.remove(str[left])
+            left += 1
+        window_set.add(str[right])
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+print(22)
+print(longest_substring_without_repeating('butter'))
