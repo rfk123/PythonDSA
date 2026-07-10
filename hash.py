@@ -128,5 +128,22 @@ def longest_substring_without_repeating(str):
     return max_length
 
 
-print(22)
-print(longest_substring_without_repeating('butter'))
+def longest_substring_k_distinct(str, k):
+    frequencies = {}
+    max_length = 0
+    right = 0
+    left = 0
+    n = len(str)
+    while right < n:
+        frequencies[str[right]] = frequencies.get(str[right], 0) + 1
+        while len(frequencies) > k:
+            frequencies[str[left]] -= 1
+            if frequencies[str[left]] == 0:
+                del frequencies[str[left]]
+            left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+print(longest_substring_k_distinct("aaabbc", 2))
