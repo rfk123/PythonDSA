@@ -113,4 +113,30 @@ def first_unique_char(s):
 
 
 def group_anagrams(strs):
-    pass
+    # This function will go through a list of strings and output a list of anagram groupings
+    # Input -> A list of strings (lowercase letters only)
+    # Output -> A list of lists
+    """
+    My first idea allows for a solution that requires just one pass through the strs list.
+    We will need to first create a hashmap. The keys in the hashmap will be a numerical id of each anagram that exists in the strs list. 
+    The values will be the strs that belong to that anagram.
+    Through each iteration of the list strs we take the string, find its numerical representation (a bucket array of size 26 with char frequencies), check to see if that exists in the
+    hashmap and if it does then we add the current string to that key's value list and if it doesnt then make a new key value pair in the hashmap with the current string and its
+    bucket array representation as its key.
+    Then just return the values of the hashmap.
+    """
+    anagrams = {}
+    for word in strs:
+        count = [0] * 26
+        for char in word:
+            index = ord(char) - ord("a")
+            count[index] += 1
+        key = tuple(count)
+        if key not in anagrams:
+            anagrams[key] = []
+        anagrams[key].append(word)
+    return list(anagrams.values())
+
+
+""" Tests for group_anagrams """
+# ['eat', 'tea', 'lep', 'ple', 'ate', 'dog'] -> [['eat', 'tea', 'ate'], ['lep', 'ple'], ['dog']]
