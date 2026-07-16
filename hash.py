@@ -147,3 +147,4 @@ def longest_substring_k_distinct(str, k):
 
 
 print(longest_substring_k_distinct("aaabbc", 2))
+print(longest_substring_without_repeating('startpl'))
