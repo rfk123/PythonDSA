@@ -13,8 +13,10 @@ def can_construct(ransom_note: str, magazine: str) -> bool:
             count[char] -= 1
             if count[char] == 0:
                 del count[char]
+                if not count:
+                    return True
 
-    return len(count) == 0
+    return False
 
 
 print(can_construct('hello', 'tryhelloagain'))
