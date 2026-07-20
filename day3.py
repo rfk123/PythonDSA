@@ -10,3 +10,12 @@ def first_unique_character(s: str) -> int:
 
 
 print(first_unique_character('stars'))
+
+
+def first_duplicate(nums: list[int]) -> int | None:
+    seen = set()
+    for num in nums:
+        if num in seen:
+            return num
+        seen.add(num)
+    return None
