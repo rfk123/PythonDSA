@@ -42,6 +42,11 @@ def word_pattern(pattern: str, sentence: str) -> bool:
     return True
 
 
+"""
+The information stored in word_to_char 
+"""
+
+
 def group_anagrams(words: list[str]) -> list[list[str]]:
     anagrams = {}
     for word in words:
