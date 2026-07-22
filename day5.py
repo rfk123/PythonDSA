@@ -6,13 +6,14 @@ def is_palindrome(s: str) -> bool:
     # Things to consider? palindromes could be odd lengthed strings or even.
     # Inuition tells you what? To use a converging two pointer solution in order to solve this problem in just one pass
     left = 0
-    right = len(str) - 1
+    right = len(s) - 1
     while (left < right):
         if (s[left] != s[right]):
             return False
         left += 1
         right -= 1
     return True
+    # Time complexity is O(n) and space complexity is O(1)
 
 
 def reverse_string(chars: list[str]) -> None:
@@ -26,6 +27,7 @@ def reverse_string(chars: list[str]) -> None:
         [chars[left], chars[right]] = [chars[right], chars[left]]
         left += 1
         right -= 1
+    # Time complexity is O(n) and space complexity is O(1)
 
 
 def move_zeroes(nums: list[int]) -> None:
@@ -40,8 +42,22 @@ def move_zeroes(nums: list[int]) -> None:
             [nums[write], nums[read]] = [nums[read], nums[write]]
             write += 1
         read += 1
+    # Time complexity is O(n) and space complexity is O(1)
 
 
 def remove_duplicates(nums: list[int]) -> int:
-
-    pass
+    # What do I need to store? Nothing
+    # Do I need to actually remove the duplicates from the list or do I just move them to the back of the array and return the length of the valid numbers? Return k for length of valid sublist.
+    # Things to consider? I need to return the length of unique integers in the inputed list and not a new list. is this list sorted? Yes.
+    # What does your intuition tell you? To use the same pattern as the move zeroes function (use a read and write ptr starting from beginning of list). That the index of the write ptr will be our k
+    if not nums:
+        return 0
+    read = 1
+    write = 1
+    while (read < len(nums)):
+        if nums[read] != nums[write - 1]:
+            nums[write] = nums[read]
+            write += 1
+        read += 1
+    return write
+    # Time complexity is O(n) and space complexity is O(1)
