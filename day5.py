@@ -29,9 +29,19 @@ def reverse_string(chars: list[str]) -> None:
 
 
 def move_zeroes(nums: list[int]) -> None:
-    # What do I need
-    pass
+    # What do I need to store? Nothing
+    # Do we need to move or remove the zeroes? we just need to move all zeroes to the end of the list
+    # Things to consider? We have to not only move the zeroes to the back of the list but also move the valid ints towards the front so there are consecutive non-zeroes starting from the beginning.
+    # What does your intuition tell you? That I should use a two pointer solution where each ptr starts at the beginning of the list. One ptr goes looking for non-zeroes and the other ptr holds the spot of the first zero.
+    read = 0
+    write = 0
+    while (read < len(nums)):
+        if (nums[read] != 0):
+            [nums[write], nums[read]] = [nums[read], nums[write]]
+            write += 1
+        read += 1
 
 
 def remove_duplicates(nums: list[int]) -> int:
+
     pass
