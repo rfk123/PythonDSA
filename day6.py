@@ -39,3 +39,43 @@ def reverse_string(s: str) -> None:
         s[left], s[right] = s[right], s[left]
         left += 1
         right -= 1
+
+
+def remove_element(nums: list[int], val: int) -> int:
+    """
+    Remove every occurence of val in place
+
+    Return k, where the first k positions contain
+    the values that are not equal to val
+    """
+    left = 0
+    right = 0
+    while right < len(nums):
+        if (nums[right] != val):
+            nums[right], nums[left] = nums[left], nums[right]
+            left += 1
+        right += 1
+    return left
+
+
+def max_sum_subarray(nums: list[int], k: int) -> int | None:
+    if k > len(nums) or k <= 0:
+        return None
+    left = 0
+    right = 0
+    current_sum = 0
+    while right < k:
+        current_sum += nums[right]
+        right += 1
+    largest_sum = current_sum
+
+    while right < len(nums):
+        current_sum -= nums[left]
+        current_sum += nums[right]
+        largest_sum = max(largest_sum, current_sum)
+        left += 1
+        right += 1
+    return largest_sum
+
+
+print(max_sum_subarray([2, 1, 5, 1, 3, 2], 3))
