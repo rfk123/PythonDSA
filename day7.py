@@ -48,3 +48,39 @@ def min_subarray_len(target: int, nums: list[int]) -> int:
 
 
 print(min_subarray_len(7, [2, 3, 1, 2, 4, 3]))
+
+
+# Test of knowledge
+def max_vowels(s: str, k: int) -> int:
+    """
+    What information must be stored? Nothing except we could create a set that contains only vowels. Other than that we will have a count and two pointers
+    Which datastructure or pointer pattern fit? we will use a sliding window approach with a fixed-sized set
+    Is the window fixed or variable? The window in this sliding window approach will be fixed of size k
+    What makes the current state valid/invalid? the window must be of size k
+    Time and space complexity? O(n) time complexity and O(1) space complexity size the size of the set is fixed ("a", "e", "i", "o", "u")
+    """
+    if k > len(s) or k <= 0:
+        return 0
+    vowels = set(["a", "e", "i", "o", "u"])
+    vowel_count = 0
+    left = 0
+    right = 0
+    while right < k:
+        if s[right] in vowels:
+            vowel_count += 1
+        right += 1
+    max_vowels = vowel_count
+    while right < len(s):
+        if s[left] in vowels:
+            vowel_count -= 1
+        left += 1
+        if s[right] in vowels:
+            vowel_count += 1
+        right += 1
+        max_vowels = max(vowel_count, max_vowels)
+    return max_vowels
+
+
+print(max_vowels("abciiidef", 3))
+print(max_vowels("aeiou", 2))
+print(max_vowels("leetcode", 3))
