@@ -25,10 +25,10 @@ def length_of_longest_substrings(s: str) -> int:
     return max_length
 
 
-print(length_of_longest_substrings("abcabcbb"))
-print(length_of_longest_substrings("bbbbbb"))
-print(length_of_longest_substrings("abba"))
-print(length_of_longest_substrings(""))
+# print(length_of_longest_substrings("abcabcbb"))
+# print(length_of_longest_substrings("bbbbbb"))
+# print(length_of_longest_substrings("abba"))
+# print(length_of_longest_substrings(""))
 
 
 def min_subarray_len(target: int, nums: list[int]) -> int:
@@ -47,7 +47,7 @@ def min_subarray_len(target: int, nums: list[int]) -> int:
     return 0 if min_length == float("inf") else min_length
 
 
-print(min_subarray_len(7, [2, 3, 1, 2, 4, 3]))
+# print(min_subarray_len(7, [2, 3, 1, 2, 4, 3]))
 
 
 # Test of knowledge
@@ -81,6 +81,36 @@ def max_vowels(s: str, k: int) -> int:
     return max_vowels
 
 
-print(max_vowels("abciiidef", 3))
-print(max_vowels("aeiou", 2))
-print(max_vowels("leetcode", 3))
+# print(max_vowels("abciiidef", 3))
+# print(max_vowels("aeiou", 2))
+# print(max_vowels("leetcode", 3))
+
+
+def longest_ones(nums: list[int]) -> int:
+    """
+    Return the length of the longest contiguous subarray containing at most one zero
+    What information must be stored? Nothing except for a zero counter, two pointers, and a max_length variable
+    Which datastructure or pointer pattern fit? We just need two pointers for this 
+    Is the window fixed or variable? variable
+    What makes the current state valid/invalid? if there is one or fewer zeores in the subarray then that subarray is valid. else invalid
+    Time and space complexity? Time complexity is O(n) and space complexity is O(1)
+    """
+    max_length = 0
+    left = 0
+    right = 0
+    zeroes_count = 0
+    while right < len(nums):
+        if nums[right] == 0:
+            zeroes_count += 1
+            while zeroes_count > 1:
+                if nums[left] == 0:
+                    zeroes_count -= 1
+                left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+# print(longest_ones([1, 1, 0, 1, 1, 1]))
+# print(longest_ones([1, 0, 1, 0, 1, 1]))
+# print(longest_ones([0, 0, 0]))
