@@ -114,3 +114,58 @@ def longest_ones(nums: list[int]) -> int:
 # print(longest_ones([1, 1, 0, 1, 1, 1]))
 # print(longest_ones([1, 0, 1, 0, 1, 1]))
 # print(longest_ones([0, 0, 0]))
+
+
+def intersection(nums1: list[int], nums2: list[int]) -> list[int]:
+    """
+    Return the unique values appearing in both arrays. Order does not matter
+    What information must be stored? We could make a set of all the values in nums1 and then itterate through nums2 checking if the current val is in the set. if it is add to result array and remove from set
+    Which datastructure or pointer pattern fit? A set
+    Is the window fixed or variable? No window is needed
+    What makes the current state valid/invalid? if the current num is in the set then we can add it to our result array and remove the num from the set
+    Time and space complexity? The time complexity is O(n) + O(m) n is size of nums1 and m is size of nums2. space complexity is O(n) worst case
+    """
+    seen = set(nums1)
+    result = []
+
+    for num in nums2:
+        if num in seen:
+            result.append(num)
+            seen.discard(num)
+
+    return result
+
+
+# print(intersection([1, 2, 2, 1], [2, 2]))
+# print(intersection([4, 9, 5], [9, 4, 9, 8, 4]))
+
+
+def sorted_squares(nums: list[int]) -> list[int]:
+    """
+    Given a sorted list that may contain negative values, return the squares in sorted order
+    What information must be stored? we must return a result array that will store our new square values in order
+    Which datastructure or pointer pattern fit? we will need to use a converging two pointer pattern with a result array
+    Is the window fixed or variable? No window is needed
+    What makes the current state valid/invalid? We will compare the values at each end of the input array and the largest absolute value between the two will be inputted starting from the end of the new result array
+    Time and space complexity? Time complexity is O(n) since every element in nums is visited once and space complexity is O(n) since the result array size scales with the input array length.
+    """
+    result = [0] * len(nums)
+    left = 0
+    right = len(nums) - 1
+    n = len(nums) - 1
+
+    while left <= right:
+        right_val = abs(nums[right])
+        left_val = abs(nums[left])
+        if right_val > left_val:
+            result[n] = right_val ** 2
+            right -= 1
+        else:
+            result[n] = left_val ** 2
+            left += 1
+        n -= 1
+    return result
+
+
+# print(sorted_squares([-4, -1, 0, 3, 10]))  # [0, 1, 9, 16, 100]
+# print(sorted_squares([-7, -3, 2, 3, 11]))  # [4, 9, 9, 49, 121]
