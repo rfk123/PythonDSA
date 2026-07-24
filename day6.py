@@ -79,3 +79,25 @@ def max_sum_subarray(nums: list[int], k: int) -> int | None:
 
 
 print(max_sum_subarray([2, 1, 5, 1, 3, 2], 3))
+
+
+def max_average_subarray(nums: list[int], k: int) -> float | None:
+    if k > len(nums) or k <= 0:
+        return None
+    current_sum = 0
+    left = 0
+    right = 0
+    while (right < k):
+        current_sum += nums[right]
+        right += 1
+    max_sum = current_sum
+    while (right < len(nums)):
+        current_sum -= nums[left]
+        current_sum += nums[right]
+        max_sum = max(max_sum, current_sum)
+        right += 1
+        left += 1
+    return max_sum / k
+
+
+print(max_average_subarray([5], 1))
