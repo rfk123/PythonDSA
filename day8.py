@@ -60,7 +60,7 @@ print(longest_subarray_at_most_k_zeroes([0, 0, 1, 1, 0], 1))  # 3)
 
 def two_sum_sorted(nums: list[int], target: int) -> list[int]:
     left = 0
-    right = len(nums)
+    right = len(nums) - 1
     while left < right:
         sum = nums[right] + nums[left]
         if sum == target:
