@@ -79,13 +79,12 @@ print(two_sum_sorted([1, 2, 3], 10))      # []
 
 # Day 8 continued
 def longest_consecutive(nums: list[int]) -> int:
-    max_length = 0
+    if not nums:
+        return 0
+    max_length = 1
     left = 0
-    right = 0
+    right = 1
     while right < len(nums):
-        if right == 0:
-            right += 1
-            continue
         if (nums[right - 1] + 1) != nums[right]:
             left = right
         max_length = max(right - left + 1, max_length)
