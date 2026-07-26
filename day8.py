@@ -75,3 +75,24 @@ def two_sum_sorted(nums: list[int], target: int) -> list[int]:
 print(two_sum_sorted([2, 7, 11, 15], 9))  # [0, 1]
 print(two_sum_sorted([1, 2, 3, 4, 6], 6))  # [1, 3]
 print(two_sum_sorted([1, 2, 3], 10))      # []
+
+
+# Day 8 continued
+def longest_consecutive(nums: list[int]) -> int:
+    max_length = 0
+    left = 0
+    right = 0
+    while right < len(nums):
+        if right == 0:
+            right += 1
+            continue
+        if (nums[right - 1] + 1) != nums[right]:
+            left = right
+        max_length = max(right - left + 1, max_length)
+        right += 1
+    return max_length
+
+
+print(longest_consecutive([100, 4, 200, 1, 3, 2]))  # 4
+print(longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))  # 9
+print(longest_consecutive([]))  # 0)
