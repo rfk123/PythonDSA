@@ -43,3 +43,22 @@ def longest_consecutive(nums: list[int]) -> int:
 
 
 print(longest_consecutive([100, 4, 200, 1, 3, 2]))
+
+
+def is_isomorphic(s: str, t: str) -> bool:
+    s_to_t = {}
+    t_to_s = {}
+    if (len(t) != len(s)):
+        return False
+    for chars, chart in zip(s, t):
+        if chars in s_to_t and s_to_t[chars] != chart:
+            return False
+        if chart in t_to_s and t_to_s[chart] != chars:
+            return False
+        s_to_t[chars] = chart
+        t_to_s[chart] = chars
+    return True
+
+
+print(is_isomorphic("egg", "add"))    # True
+print(is_isomorphic("foo", "bar"))    # False
