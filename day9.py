@@ -99,3 +99,16 @@ def is_isomorphic(s: str, t: str) -> bool:
         s_to_t[char_s] = char_t
 
     return True
+
+
+def longest_consecutive(nums: list[int]) -> int:
+    unique_nums = set(nums)
+    max_length = 0
+    for num in unique_nums:
+        if num - 1 not in unique_nums:
+            current_length = 1
+            while num + 1 in unique_nums:
+                current_length += 1
+                num += 1
+            max_length = max(current_length, max_length)
+    return max_length
