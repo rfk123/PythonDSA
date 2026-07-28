@@ -1,6 +1,27 @@
 
 def happy_number(n: int) -> bool:
-    pass
+    seen = set()
+    tmp = n
+    while (tmp != 1):
+        if tmp in seen:
+            return False
+        seen.add(tmp)
+        tmp = helper(tmp)
+    return True
+
+
+def helper(n: int) -> int:
+    total = 0
+    while n > 0:
+        # peel off digits from the back of the integer and add to total the square
+        digit = n % 10
+        total += digit ** 2
+        n //= 10
+    return total
+
+
+print(happy_number(19))
+print('above')
 
 
 def find_difference(nums1: list[int], nums2: list[int]) -> list[list[int]]:
