@@ -20,3 +20,20 @@ def valid_palindrome(s: str) -> bool:
 print(valid_palindrome("A man, a plan, a canal: Panama"))  # True
 print(valid_palindrome("race a car"))                      # False
 print(valid_palindrome(" "))                               # True
+
+
+def majority_element(nums: list[int]) -> int:
+    """
+    Return the value that appears more than n // 2 times
+    """
+    frequencies = {}
+    majority_element = nums[0]
+    line = len(nums) // 2
+    for num in nums:
+        frequencies[num] = frequencies.get(num, 0) + 1
+        if frequencies[num] > line:
+            majority_element = num
+    return majority_element
+
+
+print(majority_element([2, 2, 1, 1, 1, 2, 2]))  # 2
