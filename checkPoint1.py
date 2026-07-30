@@ -37,3 +37,27 @@ def majority_element(nums: list[int]) -> int:
 
 
 print(majority_element([2, 2, 1, 1, 1, 2, 2]))  # 2
+
+
+def character_replacement(s: str, k: int) -> int:
+    """
+    you may replace k characters to factor into the longest length
+    """
+    window = {}
+    left = 0
+    right = 0
+    max_freq = 0
+    max_length = 0
+    while right < len(s):
+        window[s[right]] = window.get(s[right], 0) + 1
+        max_freq = max(max_freq, window[s[right]])
+        while (right - left + 1) - max_freq > k:
+            window[s[left]] -= 1
+            left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+print(character_replacement("ABAB", 2))      # 4
+print(character_replacement("AABABBA", 1))   # 4)
