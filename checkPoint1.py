@@ -64,11 +64,29 @@ print(character_replacement("AABABBA", 1))   # 4)
 
 
 def product_except_self(nums: list[int]) -> list[int]:
-    """
-    What info do I need to store?
-    What pattern/structure fits?
-    What does each pointer/variable represent?
-    What makes the current state valid?
-    What is the time complexity?
-    What is the space complexity?
-    """
+    n = len(nums)
+    result = []
+    for i in range(len(nums)):
+        left = i - 1
+        right = i + 1
+        product_without = 1
+        while left >= 0 or right < len(nums):
+            if left >= 0:
+                product_without *= nums[left]
+                left -= 1
+            if right < len(nums):
+                product_without *= nums[right]
+                right += 1
+        result.append(product_without)
+    return result
+
+
+print(product_except_self([0, 2, 10]))
+
+# """ What info do I need to store? Maybe an array of prefix products?
+# What pattern/structure fits? I'll need an array
+# What does each pointer/variable represent?
+# What makes the current state valid?
+# What is the time complexity?
+# What is the space complexity?
+# """
