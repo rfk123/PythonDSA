@@ -61,3 +61,14 @@ def character_replacement(s: str, k: int) -> int:
 
 print(character_replacement("ABAB", 2))      # 4
 print(character_replacement("AABABBA", 1))   # 4)
+
+
+def product_except_self(nums: list[int]) -> list[int]:
+    """
+    What info do I need to store?
+    What pattern/structure fits?
+    What does each pointer/variable represent?
+    What makes the current state valid?
+    What is the time complexity?
+    What is the space complexity?
+    """
