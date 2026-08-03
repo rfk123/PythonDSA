@@ -23,5 +23,10 @@ Would a dictionary add useful information? A dictionary would be useful for this
 What information would a set lose? A set would not allow for us to store anything like indices or frequency counts. In regard to this problem, we wouldn't be able to efficiently find the index of one of
 our values that make up the two sum. 
 
+Scenario 4: Intersection 
+What must be remembered? Simply put, we must remember unique values (indices don't matter and frequency counts don't matter)
+Is a set enough? A set will be enough because all we have to check is if we have seen a value before. Sets are able to store values without any additional information which is just what we need.
+Would a dictionary add useful information? A dictionary would not add useful information since we only need the values.
+What information would a set lose? Even though we wont need them, a set will lose us the ability to keep track of indices and frequency counts.
 
 """
