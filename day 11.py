@@ -35,5 +35,20 @@ Is a set enough? A set will not be enough because we will need to store addition
 Would a dictionary add useful information? Yes, a dictionary would add useful information because in the key:value pair we can frame it as number:index and use that index to determine if the current
 value's index is within k of the last seen duplicate value's index.
 What information would a set lose? A set would lose us the ability to check the distance between two duplicate values since there will be no additional information stored along with the values.
+^^
+For the scenario above, a set is actually enough to solve this problem. If we use the combination of a set and a sliding window we can check to see if there a duplicate value in our current window set.
+"""
+
+
+# Now I will practice choosing between a set and a dictionary
+"""
+Scenario 1: Longest substring without repeating characters
+What does the algorithm need to know? Thinking about what the structure shoudl represent at this moment instead of across the entire string, I believe that the algorithm needs to know if there are any
+duplicates within the current window. We can answer that by keeping track of values that we have come across before. We will need to remove and add values to our set as our window shrinks/grows.
+Could a set work? Yes, a set could work for this problem as we only require keeping track of the current values within the window and no additional information is needed that a set couldnt provide.
+Could a dictionary work? Yes, a dictionary could work but that would be for a diffenent soultion where we would shrink our window from the left while there is a key with a value of 2.
+Which is simpler, and why? A set is simpler for this problem because it requires storing less information and doing less checks. Each solution would require a sliding window so it just comes down to 
+the extra amount of steps and storage.
+
 
 """
