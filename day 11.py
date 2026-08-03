@@ -29,4 +29,11 @@ Is a set enough? A set will be enough because all we have to check is if we have
 Would a dictionary add useful information? A dictionary would not add useful information since we only need the values.
 What information would a set lose? Even though we wont need them, a set will lose us the ability to keep track of indices and frequency counts.
 
+Scenario 5: Neabry Duplicate
+What must be remembered? We will need to store values along with their last seen index in order to see if there are duplicate values within k indices of one another.
+Is a set enough? A set will not be enough because we will need to store additional information with our values (their last seen index)
+Would a dictionary add useful information? Yes, a dictionary would add useful information because in the key:value pair we can frame it as number:index and use that index to determine if the current
+value's index is within k of the last seen duplicate value's index.
+What information would a set lose? A set would lose us the ability to check the distance between two duplicate values since there will be no additional information stored along with the values.
+
 """
