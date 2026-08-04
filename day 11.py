@@ -76,4 +76,13 @@ Could a set work? A set alone would not work because you will need to store more
 Could a dictionary work? A dictionary will work for the above reasons. We will have a frequency array act as the key and have a value list where we can group anagram words together.
 Which is simpler, and why? A dictionary is simpler because it seems to be the only option.
 
+Scenario 5: Longest Consecutive Sequence
+What does the algorithm need to know? The algorithm just needs to know all of the unique values in the input array. This is because we dont need to include duplicates since, for example, when we are at the 
+integer 4 we only care about if there is a following 5 anywhere in the input array.
+Could a set work? A set will work because we will build out our set of unique values sourced from the input array and iterate through that set only building out a 'window' when we get to an integer
+that doesnt have a integer - 1 neighbor (its the starting intger in its sequence). Then we can keep going and compare the current window length to that of the max_length until we no longer have a 
+valid window.
+Could a dictionary work? A dictionary could work as well but will contain unnecessary information.
+Which is simpler, and why? Using a set would be simpler since we only need to remember seen values and not their indices or frequency counts.
+
 """
