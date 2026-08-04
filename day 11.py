@@ -50,5 +50,20 @@ Could a dictionary work? Yes, a dictionary could work but that would be for a di
 Which is simpler, and why? A set is simpler for this problem because it requires storing less information and doing less checks. Each solution would require a sliding window so it just comes down to 
 the extra amount of steps and storage.
 
+Scenario 2: Character Replacement
+What does the algorithm need to know? The algorithm needs to know these things: the length of the current window, the frequency of the most frequenct char, and the number of substitutions allowed. I 
+believe that, in order to find the frequency of the most frequent char in the current window, we need to use a hashmap to store the chars and their frequencies.
+Could a set work? A set will not work because it won't allow us to know how many letters need to be substituted to have a valid substring.
+Could a dictionary work? Yes, a dictionary will work because we can keep track of the frequency counts of each letter in the current window. You should be able to take the difference between the length 
+of the window and the freqeuncy of the most frequent char and have that value be less than or equal to the value k in order for the current window to be valid.
+Which is simpler, and why? The dictionary is more simple (only because I am not entirely sure of what the set solution would look like).
+
+Scenario 3: Happy Number
+What does the algorithm need to know? I believe that we will need to keep track of numbers that we have seen before in order to determine whether or not we have entered a cycle. This 
+will require using a set. 
+Could a set work? Yes, a set will work in order to determine whether or not we are in a cycle by letting us know if we have seen a specific value before.
+Could a dictionary work? A dictionary could work but it requires storing extra information that we dont necessarily need.
+Which is simpler, and why? A set is simpler because we dont need to store any other information other than the values that we have seen.
+What information is required to determine a cycle? The set will help determine if we have entered a cycle because as we transform our number over and over again, if the number it transforms to is one we have al
 
 """
