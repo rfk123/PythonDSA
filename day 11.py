@@ -67,4 +67,13 @@ Which is simpler, and why? A set is simpler because we dont need to store any ot
 What information is required to determine a cycle? The set will help determine if we have entered a cycle because as we transform our number over and over again, if the number it transforms to is one we have 
 already seen then we know that it will just continuously get back to this point infinetly and therefore dont need to iterate anymore.
 
+Scenario 4: Group Anagrams 
+What does the algorithm need to know? The algorithm needs to determine how to group anagrams together. The first step to that is to figure out how to compare words in order to determine that they 
+are anagrams and the second thing is we need to find a way to group those words together. How the algorithm will compare words is by creating bucket arrays of length 26(the size of the alphabet) and
+each index in the array represents a letter's frequency count. Once we have this frequency array built out, we can convert it into a string and use that string (or tuple) as a key in a dictionary so
+that any word that is a match anagram will be placed in the value array of this key.
+Could a set work? A set alone would not work because you will need to store more information along with a value.
+Could a dictionary work? A dictionary will work for the above reasons. We will have a frequency array act as the key and have a value list where we can group anagram words together.
+Which is simpler, and why? A dictionary is simpler because it seems to be the only option.
+
 """
