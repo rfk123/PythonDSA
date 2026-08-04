@@ -86,3 +86,32 @@ Could a dictionary work? A dictionary could work as well but will contain unnece
 Which is simpler, and why? Using a set would be simpler since we only need to remember seen values and not their indices or frequency counts.
 
 """
+
+"""
+Problem A
+    Given a list of integers, return the first index where the value has appeared earlier. Return -1 if every value is unique.
+What must be remembered? The algorithm must remember values that we have seen before. That way we can determine if the current value is one that has been already seen.
+Set, dictionary, pointers, or sliding window? For this problem, I would use a set to store the unique values that we have seen before. 
+What does the chosen structure represent? The set just is a memory bank that holds values that we have come across.
+What would make the approach valid? Since we traverse the list left to right, the first value that we come across that has been seen before will be our solution and we can return that value. If we dont
+ever come across a duplicate value then we can just return -1 after iterating through the list. 
+
+Problem B
+Given two strings, determine whether every character in the first string can be matched with an available copy in the second string. Each character in the second string may be used only once.
+What must be remembered? The algorithm will need to remember what characters from string1 are tied to what characters in string2 and vise versa. So this may mean that we will require two hashmaps.
+Set, dictionary, pointers, or sliding window? I would use a dictionary (two dictionaries) for this problem.
+What does the chosen structure represent? The two dictionaries will represent character matches from string1 to string2 and from string2 to string1.
+What would make the approach valid? Going through each input string at once we can check to see if the characters are already in a hashmap and if they are, what characters can they map to. This will 
+allow us to make validity checks based on if both characters at the ith positions are pointing to right matching character. If not then we can return False, otherwise return True. 
+
+Problem C
+Given a sorted list and a target, determine whether two different values add to the target using constant extra space.
+What must be remembered? What must be 'remembered' is really nothing except for two pointer indices. 
+Set, dictionary, pointers, or sliding window? For this problem, I would use a converging two pointer technique.
+What does the chosen structure represent? The chosen structure represents two nums from different sides of the spectrum (one is the lowest num and one is the highest valued num). By taking the sum
+of these two values we can determine the movement of our pointers since the input list in sorted. 
+What would make the approach valid? What makes this approach valid is that we will either find two values that sum to the target value or the two pointers will overlap and we will know that there
+exist no two values in the list that could sum to the target value. Consider two pointers starting on opposite ends of the list. If the sum is larger than the target value then we will shrink inwards
+from the right (right pointer -= 1) and then compare those. Otherwise, if the sum was lower than the target value, we would shrink inwards from the left (left pointer += 1).
+
+"""
