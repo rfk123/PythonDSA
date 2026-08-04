@@ -64,6 +64,7 @@ will require using a set.
 Could a set work? Yes, a set will work in order to determine whether or not we are in a cycle by letting us know if we have seen a specific value before.
 Could a dictionary work? A dictionary could work but it requires storing extra information that we dont necessarily need.
 Which is simpler, and why? A set is simpler because we dont need to store any other information other than the values that we have seen.
-What information is required to determine a cycle? The set will help determine if we have entered a cycle because as we transform our number over and over again, if the number it transforms to is one we have al
+What information is required to determine a cycle? The set will help determine if we have entered a cycle because as we transform our number over and over again, if the number it transforms to is one we have 
+already seen then we know that it will just continuously get back to this point infinetly and therefore dont need to iterate anymore.
 
 """
