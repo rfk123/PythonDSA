@@ -114,4 +114,21 @@ What would make the approach valid? What makes this approach valid is that we wi
 exist no two values in the list that could sum to the target value. Consider two pointers starting on opposite ends of the list. If the sum is larger than the target value then we will shrink inwards
 from the right (right pointer -= 1) and then compare those. Otherwise, if the sum was lower than the target value, we would shrink inwards from the left (left pointer += 1).
 
+Problem D
+Given a string, return the length of the longest contiguous section containing at most two distinct characters.
+What must be remembered? What must be remembered in this alogrithm are the unique characters that we have contained within a window and their frequencies. We wont need to remember a current window length because 
+we can just source that from the two pointer locations (right - left + 1).
+Set, dictionary, pointers, or sliding window? This problem will use two pointer pattern along with a hashmap.
+What does the chosen structure represent? The chosen structure just represents the length of a contiguous substirng that only contains at most two distinct characters.
+What would make the approach valid? This approach is valid because if the character that we are adding to the window breaks our condition of having max 2 distinct chars inside, then we can just shrink 
+our window from the left using our left pointer by taking away from the left character's frequency count and deleting the left character if the count goes to zero. We will comapre max length on 
+every valid substring that meets our condition. 
+
+
+Problem E
+Given a list of integers, return the number that occurs most frequently. Assume there is one unique answer.
+What must be remembered? What must be remembered is a frequency for each value that we come across in the input list. 
+Set, dictionary, pointers, or sliding window? We will need to use a dictionary for this problem.
+What does the chosen structure represent? The chosen structure (dictionary) represents key:value pairs between a number and its frequency. 
+What would make the approach valid? This is approach is valid because once we have that frequency dictionary, we can traverse through it and return the key that has the largest value.
 """
