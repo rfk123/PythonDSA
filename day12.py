@@ -90,3 +90,35 @@ def is_isomorphic(s: str, t: str) -> bool:
 
 
 print(is_isomorphic("egg", "add"))
+
+
+"""
+One sentence naming the pattern: Determine if the string s exists in string t where the characters do not need to be adjacent to one another but have to keep their relative order.
+The code: see below
+Time and space complexity. The time complexity is O(n) where n is the length of t. The space complexity is O(1).
+One manual dry run: Done in my head
+"""
+
+
+def is_subsequence(s: str, t: str) -> bool:
+    """
+    Return True when all characters of s appear
+    in t in the same relative order.
+
+    Characters do not need to be adjacent.
+    """
+    if len(s) > len(t):
+        return False
+
+    ptr_s = 0
+    ptr_t = 0
+
+    while ptr_s < len(s) and ptr_t < len(t):
+        if s[ptr_s] == t[ptr_t]:
+            ptr_s += 1
+        ptr_t += 1
+
+    return ptr_s == len(s)
+
+
+print(is_subsequence("axc", "ahbgdc"))
