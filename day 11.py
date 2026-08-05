@@ -132,3 +132,46 @@ Set, dictionary, pointers, or sliding window? We will need to use a dictionary f
 What does the chosen structure represent? The chosen structure (dictionary) represents key:value pairs between a number and its frequency. 
 What would make the approach valid? This is approach is valid because once we have that frequency dictionary, we can traverse through it and return the key that has the largest value.
 """
+
+"""
+Problem: Same Unique Characters
+One sentence naming the pattern: I think that the pattern will be building a set of all of the unique chars for both string s and t. Once we have both sets we can loop through one and if the other
+set does not contain that char then return false, otherwise delete the char from both sets. This is ofcourse after we check to see if the lengths of the sets differ (we would return false then).
+The code. See below.
+Time and space complexity: The time complexity to build each set is O(n) and O(m) and then to loop through one of the sets is O(k) k being the length of the set. So O(n). The space complexity is also O(n) worst case if n is length of longest string
+One manual dry run:
+same_unique_characters("aab", "abb") -> True
+unique_s -> {a, b}
+unique_t -> {a, b}
+2 == 2 
+is 'a' in unique_t? Yes, delete from both
+unique_s -> {b}
+unique_t -> {b}
+is 'b' in unique_t? Yes, delete from both
+unique_s -> {}
+unique_t -> {}
+return True
+"""
+
+
+def same_unique_characters(s: str, t: str) -> bool:
+    """
+    Return True when s and t contain the same distinct characters.
+    Frequencies do not matter.
+    """
+    unique_s = set(s)
+    unique_t = set(t)
+    if len(unique_s) != len(unique_t):
+        return False
+
+    for char in unique_s:
+        if char not in unique_t:
+            return False
+        unique_t.remove(char)
+        unique_s.remove(char)
+
+    return True
+
+
+print(same_unique_characters("aab", "abb"))
+print("he")

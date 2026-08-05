@@ -90,3 +90,20 @@ print(product_except_self([0, 2, 10]))
 # What is the time complexity?
 # What is the space complexity?
 # """
+
+
+def same_unique_characters(s: str, t: str) -> bool:
+    """
+    Return True when s and t contain the same distinct characters.
+    Frequencies do not matter.
+    """
+    unique_s = set(s)
+
+    for char in t:
+        if char not in unique_s:
+            return False
+
+    return True
+
+
+print(same_unique_characters("aab", "abcb"))
