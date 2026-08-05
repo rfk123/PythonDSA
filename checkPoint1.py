@@ -87,9 +87,17 @@ print(product_except_self([0, 2, 10]))
 # What pattern/structure fits? I'll need an array
 # What does each pointer/variable represent?
 # What makes the current state valid?
-# What is the time complexity?
-# What is the space complexity?
+# What is the time complexity? O(k) + O(m) k is length of unique_t and m is length of unique_s
+# What is the space complexity? O(k) k being length of unique_t
 # """
+
+
+"""
+One sentence naming the pattern: Performing a set comparison on two strings for a match in distinct characters.
+The code: see below
+Time and space complexity. Time complexity is O(k) where k is length of unique_t. Space complexity is O(k) + O(m) k being unique_t length and m being unique_s length.
+One manual dry run: Done while speaking outloud
+"""
 
 
 def same_unique_characters(s: str, t: str) -> bool:
@@ -98,12 +106,16 @@ def same_unique_characters(s: str, t: str) -> bool:
     Frequencies do not matter.
     """
     unique_s = set(s)
+    unique_t = set(t)
 
-    for char in t:
+    if len(unique_s) != len(unique_t):
+        return False
+
+    for char in unique_t:
         if char not in unique_s:
             return False
 
     return True
 
 
-print(same_unique_characters("aab", "abcb"))
+print(same_unique_characters("aab", "abb"))
