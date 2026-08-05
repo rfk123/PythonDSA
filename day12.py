@@ -29,10 +29,11 @@ print(same_unique_characters("aab", "abb"))
 
 
 """
-One sentence naming the pattern: 
+One sentence naming the pattern: Using requency bucket arrays, compare two strings to determine if they have matching unique characters and that those characters have matching frequencies.
 The code: see below
-Time and space complexity. 
-One manual dry run: 
+Time and space complexity. Time complexity is going to be O(n) n being the length of string s/t (doesnt matter which) except for if the lengths differ. Then the time complexity is O(1). 
+The space complexity will be O(1) since the bucket lists do not scale with the size of the input strings and remain size 26.
+One manual dry run: Done while speaking outloud.
 """
 
 
@@ -57,3 +58,35 @@ def is_anagram(s: str, t: str) -> bool:
 
 
 print(is_anagram("aabcb", "cbaba"))
+
+"""
+One sentence naming the pattern: Using two dictionaries, determine if the two input strings have the same amount of unique characters and that those characters have one-to-one mapping relaitonships.
+The code: see below
+Time and space complexity. The time complexity is going to be O(n) and the space complexity may be considered linear since the max that the dictionary lengths can go to is 26 (if chars are all lower case)
+One manual dry run: Done while speaking out loud
+"""
+
+
+def is_isomorphic(s: str, t: str) -> bool:
+    """
+    Return True when characters map consistently
+    and one-to-one between the strings.
+    """
+    if len(s) != len(t):
+        return False
+
+    counts_s = {}  # 'a':'p', 'p':'b'...
+    counts_t = {}  # same thing
+
+    for char_s, char_t in zip(s, t):
+        if char_s in counts_s and counts_s[char_s] != char_t:
+            return False
+        if char_t in counts_t and counts_t[char_t] != char_s:
+            return False
+        counts_s[char_s] = char_t
+        counts_t[char_t] = char_s
+
+    return True
+
+
+print(is_isomorphic("egg", "add"))
