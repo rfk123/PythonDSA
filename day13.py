@@ -23,10 +23,10 @@ def longest_two_distinct(s: str) -> int:
     return max_length
 
 
-print(longest_two_distinct("eceba"))   # 3, from "ece"
-print(longest_two_distinct("ccaabbb"))  # 5, from "aabbb"
-print(longest_two_distinct(""))        # 0
-print(longest_two_distinct("aaaa"))    # 4
+# print(longest_two_distinct("eceba"))   # 3, from "ece"
+# print(longest_two_distinct("ccaabbb"))  # 5, from "aabbb"
+# print(longest_two_distinct(""))        # 0
+# print(longest_two_distinct("aaaa"))    # 4
 
 
 """
@@ -41,4 +41,44 @@ print(longest_two_distinct("aaaa"))    # 4
 Time complexity: O(n)
 Space Complexity: O(n)
 Why delete zero frequency key: We delete that entry in our dictionary when its value hits 0 because that means we no longer have that character in our window.
+"""
+
+
+def longest_k_distinct(s: str, k: int) -> int:
+    """
+    Return the length of the longest contiguous substring
+    containing at most k distinct characters.
+    """
+    counts = {}
+    left = 0
+    right = 0
+    max_length = 0
+
+    if k <= 0:
+        return 0
+
+    while right < len(s):
+        counts[s[right]] = counts.get(s[right], 0) + 1
+        while len(counts) > k:
+            counts[s[left]] -= 1
+            if counts[s[left]] == 0:
+                del counts[s[left]]
+            left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+# Test Cases
+print(longest_k_distinct("eceba", 2))      # 3
+print(longest_k_distinct("aa", 1))         # 2
+print(longest_k_distinct("abcba", 2))      # 3
+print(longest_k_distinct("", 3))           # 0
+print(longest_k_distinct("abc", 0))        # 0
+
+"""
+What counts represents: A dictionary that stores character:freqeuncy pairs in order to properly shrink our variable-sized window
+What makes the window valid: Everything in s[left:right + 1] is a contiguous substring that has no more than k distinct characters
+The invariant: After shrinking, the contiguous substring s[left:right+1] will have at most k distinct characters.
+What should happen when k <= 0: This should just return 0 since there are no possible substrings of that length.
 """
