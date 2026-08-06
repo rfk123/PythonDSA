@@ -70,11 +70,11 @@ def longest_k_distinct(s: str, k: int) -> int:
 
 
 # Test Cases
-print(longest_k_distinct("eceba", 2))      # 3
-print(longest_k_distinct("aa", 1))         # 2
-print(longest_k_distinct("abcba", 2))      # 3
-print(longest_k_distinct("", 3))           # 0
-print(longest_k_distinct("abc", 0))        # 0
+# print(longest_k_distinct("eceba", 2))      # 3
+# print(longest_k_distinct("aa", 1))         # 2
+# print(longest_k_distinct("abcba", 2))      # 3
+# print(longest_k_distinct("", 3))           # 0
+# print(longest_k_distinct("abc", 0))        # 0
 
 """
 What counts represents: A dictionary that stores character:freqeuncy pairs in order to properly shrink our variable-sized window
@@ -82,3 +82,48 @@ What makes the window valid: Everything in s[left:right + 1] is a contiguous sub
 The invariant: After shrinking, the contiguous substring s[left:right+1] will have at most k distinct characters.
 What should happen when k <= 0: This should just return 0 since there are no possible substrings of that length.
 """
+
+
+def character_replacement(s: str, k: int) -> int:
+    """
+    Return the length of the longest contiguous substring
+    that can be turned into one repeated character using
+    at most k replacements.
+    'aaaaaa', 1 ->  6
+    'aaaaab', 1 -> 6
+    'babs', 1, 3
+    """
+    counts = {}
+    left = 0
+    right = 0
+    max_length = 0
+    max_freq = 0
+
+    while right < len(s):
+        counts[s[right]] = counts.get(s[right], 0) + 1
+        max_freq = max(max_freq, counts[s[right]])
+        while (right - left + 1) - max_freq > k:
+            counts[s[left]] -= 1
+            if counts[s[left]] == 0:
+                del counts[s[left]]
+            left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+"""
+What does the frequency dictionary represent? The freqeuncy dictionary 'counts' represents the character:frequency pairs of the current window. Which means all of the distinct characters and their frequencies
+are stored in this that belong in the window.
+What does max_frequency represent? max_frequency 'max_freq' represents the frequency of the most frequent character in the window.
+How many replacements does the current window require? The current window will require (right - left + 1) - max_freq replacements
+What makes the window invalid? A window is invalid if there are too many required replacements, (right - left + 1) - max_freq > k.
+What is the invariant after shrinking? After shrinking, counts will represent the distinct characters and each of their frequencies of the characters in the window s[left:right+1] and our window
+will contain a length of chracters where there are at most k characters that, when replaced, create a contiguous repeating character of size right - left + 1.
+"""
+
+# Test cases
+print(character_replacement("ABAB", 2))  # 4
+print(character_replacement("AABABBA", 1))
+print(character_replacement("AAAA", 0))
+print(character_replacement("", 2))
