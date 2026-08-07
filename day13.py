@@ -123,7 +123,57 @@ will contain a length of chracters where there are at most k characters that, wh
 """
 
 # Test cases
-print(character_replacement("ABAB", 2))  # 4
-print(character_replacement("AABABBA", 1))
-print(character_replacement("AAAA", 0))
-print(character_replacement("", 2))
+# print(character_replacement("ABAB", 2))  # 4
+# print(character_replacement("AABABBA", 1))
+# print(character_replacement("AAAA", 0))
+# print(character_replacement("", 2))
+
+
+def contains_permutation(pattern: str, text: str) -> bool:
+    """
+    Return True if text contains a contiguous substring
+    that is an anagram of pattern.
+    """
+    # assume that there are no empty patterns because if there were then we would just return true right?
+    if len(text) < len(pattern):
+        return False
+
+    pattern_bucket = [0] * 26
+    window_bucket = [0] * 26
+    left = 0
+    right = 0
+    while right < len(pattern):
+        p_index = ord(pattern[right]) - ord('a')
+        t_index = ord(text[right]) - ord('a')
+        pattern_bucket[p_index] += 1
+        window_bucket[t_index] += 1
+        right += 1
+
+    if pattern_bucket == window_bucket:
+        return True
+
+    while right < len(text):
+        window_bucket[ord(text[left]) - ord('a')] -= 1
+        window_bucket[ord(text[right]) - ord('a')] += 1
+        if window_bucket == pattern_bucket:
+            return True
+        left += 1
+        right += 1
+    return False
+
+
+"""
+Time complexity is: O(n) 
+Space complexity is: O(1)
+Why zero value keys should be deleted: I did not use dictionaries on this attempt
+Why this is fixed-size rather than variable-sized: This is because in order for a suibstring to be considered an anagram of our pattern, it must be of the same size, thus we only look at sub
+strings of size len(pattern) which is a fixed size. 
+"""
+
+print(contains_permutation("ab", "eidbaooo"))
+print(contains_permutation("abc", "eidbaooo"))
+print(contains_permutation("aib", "eidbaooo"))
+print(contains_permutation("ab", "e"))
+
+
+# BEFORE MOVING ON, MAKE THIS BUCKET ARRAY SOLUTION EFFICIENT WITHOUT LOOKING AT SOLUTION
