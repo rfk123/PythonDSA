@@ -68,3 +68,5 @@ print(subarray_sum([1, 1, 1], 2))
 #
 #
 #
+
+print(4 % 5)
