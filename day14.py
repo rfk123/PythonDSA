@@ -32,28 +32,39 @@ def max_sum_subarray(nums: list[int], k: int) -> int | None:
 
 
 """
-Why would a normal variable sliding window be unreliable here?
-What information would a running prefix sum give us?
-If the current prefix sum is current_sum, what earlier prefix sum would imply that the subarray between them sums to k?
-Why might we need a dictionary of prefix-sum frequencies rather than just a set?
+Why would a normal variable sliding window be unreliable here? Using a normal variable-sized sliding window would not be a viable option here because the inpiut
+list is not necessarily sorted and can have negative values. This means that expanding our window could increase or decrease the window's current sum.
+What information would a running prefix sum give us? Using a running prefix sum, we will be given the ability to see the sum of all of the subarrays with 
+quick lookup.
+If the current prefix sum is current_sum, what earlier prefix sum would imply that the subarray between them sums to k?If the current prefix sum is our current_sum
+It will need to be a sum that is current_sum - k
+Why might we need a dictionary of prefix-sum frequencies rather than just a set? This is important to pool the counts together quickly. So if we come accross a 
+5 in our prefix sum list then we do 5 - k and look to see if our dictionary has any 5 - k value. if it does what is its frequency? Because that will be the number
+of subarrays that sum to k.
 """
 
 
-def subarray_sum(nums: list[int], k: int) -> int | None:
+def subarray_sum(nums: list[int], k: int) -> int:
     """
     Return the number of contiguous subarrays
     whose sum equals k.
     """
-    # [2,3,1-1,2,3,41,-12]
+    n = len(nums)
+    current_sum = 0
     count = 0
-    for j in range(len(nums)):
-        current_sum = 0
-        for i in range(j, len(nums)):
-            current_sum += nums[i]
-            if current_sum == k:
-                count += 1
-
+    counts = {0: 1}
+    for i in range(n):
+        current_sum += nums[i]
+        difference = current_sum - k
+        if difference in counts or difference == 0:
+            count += counts[difference]
+        counts[current_sum] = counts.get(current_sum, 0) + 1
     return count
 
 
 print(subarray_sum([1, 1, 1], 2))
+# [1,2,3]
+# {1:1}
+#
+#
+#
