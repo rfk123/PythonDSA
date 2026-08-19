@@ -37,3 +37,45 @@ For this problem, should the hashmap store a frequency or an index? I think that
 subarrays.
 If it stores an index, do you want the earliest occurrence or the most recent occurrence? Why? You want the earliest occurence because we are only concerned with the longest contiguous subarrays.
 """
+
+
+def find_max_length(nums: list[int]) -> int:
+    """
+    Given a binary array containing only 0s and 1s,
+    return the maximum length of a contiguous subarray
+    containing an equal number of 0s and 1s.
+    """
+    starts = {0: -1}
+    max_length = 0
+    current_sum = 0
+
+    for i, num in enumerate(nums):
+        if num == 0:
+            current_sum -= 1
+        else:
+            current_sum += 1
+        if current_sum in starts:
+            max_length = max(max_length, i - starts[current_sum])
+        else:
+            starts[current_sum] = i
+
+    return max_length
+
+
+# Test cases
+print(find_max_length([0, 1]))           # 2
+# {0:-1, -1: 0, }
+print(find_max_length([0, 1, 0]))        # 2
+print(find_max_length([0, 0, 1, 0, 1, 1]))  # 6
+
+# Questions to answer before coding
+# Try to think about the solution before reading these
+"""
+How could you transform the problem so that “equal number of 0s and 1s” becomes a subarray sum condition? I'm not sure if this is a dumb idea but maybe give 0s a value of negative 1. this way our subarray sum will
+be balanced if the sum equals 0.
+Once transformed, what prefix-sum value repeating at two different indices would tell you? If you see prefix sums of the same value then you know their is no change (aka a balance of 0s and 1s) between those two 
+points and we should consider that subarrays length
+Should the hashmap store frequencies or indices? Since we want to keep track of valid starting points, I think it is best to store the index
+If indices, earliest or most recent? We will want to store the earlist occurence since we are only concerned with max length
+What should the hashmap be initialized with? {0: -1} this is because when we find a prefix sum of 0 that means that the entire array up to this point is balanced with 0s and 1s
+"""
