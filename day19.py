@@ -79,3 +79,27 @@ Should the hashmap store frequencies or indices? Since we want to keep track of 
 If indices, earliest or most recent? We will want to store the earlist occurence since we are only concerned with max length
 What should the hashmap be initialized with? {0: -1} this is because when we find a prefix sum of 0 that means that the entire array up to this point is balanced with 0s and 1s
 """
+
+
+# Next problem is continous subarray sum
+def check_subarray_sum(nums: list[int], k: int) -> bool:
+    """
+    Return True if there exists a contiguous subarray
+    of length at least 2 whose sum is a multiple of k.
+    """
+    return False
+
+
+# Test cases
+check_subarray_sum([23, 2, 4, 6, 7], 6)   # True
+check_subarray_sum([23, 2, 6, 4, 7], 6)   # True
+check_subarray_sum([23, 2, 6, 4, 7], 13)  # False
+
+# Answer these before writing out the code but try to think through a solution before reading them
+"""
+If two prefix sums have the same remainder % k, what does that tell you about the sum between them?
+Since we only need True or False, do we need remainder frequencies?
+What information do we need in order to enforce subarray length at least 2?
+If the same remainder appears multiple times, should we keep its earliest or latest index?
+Based on what we just discussed about the imaginary empty prefix, what should the hashmap initially contain?
+"""
