@@ -3,20 +3,17 @@ def longest_subarray_sum_k(nums: list[int], k: int) -> int:
     Return the length of the longest contiguous subarray
     whose sum equals k.
     """
-    starts = {}
+    prefix_sums = {}
     max_length = 0
-    prefix_sum = [0] * len(nums)
     current_sum = 0
-    # build prefix sum
-    for i in range(len(nums)):
-        current_sum += nums[i]
-        prefix_sum[i] = current_sum
-    for i, num in enumerate(prefix_sum):
+    for i, num in enumerate(nums):
+        current_sum += num
         difference = num - k
-        if difference in starts:
-            max_length = max(max_length, i - starts[difference] + 1)
-        if num not in starts:
-            starts[num] = i
+        if difference in prefix_sums:
+            max_length = max(max_length, i - prefix_sums[difference] + 1)
+    if current_sum not in prefix_sums:
+        prefix_sums[current_sum] = i
+
     return max_length
 
 
@@ -33,4 +30,4 @@ subarray whose sum equals k
 For this problem, should the hashmap store a frequency or an index? The hashmap should store an index so that we may ascertain the length of the subarray whose sum equals k.
 If it stores an index, do you want the earliest occurrence or the most recent occurrence? Why? We would only want the earliest occurrence because we are only concerned with the longest subarrays.
 """
-# [1,0,5,3,6]
+# [1,0,5,3,6
