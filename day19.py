@@ -87,19 +87,31 @@ def check_subarray_sum(nums: list[int], k: int) -> bool:
     Return True if there exists a contiguous subarray
     of length at least 2 whose sum is a multiple of k.
     """
+    starts = {0: -1}
+    current_sum = 0
+    for i, num in enumerate(nums):
+        current_sum += num
+        current_remainder = current_sum % k
+        if current_remainder in starts:
+            subarray_len = i - starts[current_remainder]
+            if subarray_len >= 2:
+                return True
+        else:
+            starts[current_remainder] = i
     return False
 
 
 # Test cases
-check_subarray_sum([23, 2, 4, 6, 7], 6)   # True
-check_subarray_sum([23, 2, 6, 4, 7], 6)   # True
-check_subarray_sum([23, 2, 6, 4, 7], 13)  # False
+print(check_subarray_sum([23, 2, 4, 6, 7], 6))   # True
+print(check_subarray_sum([23, 2, 6, 4, 7], 6))   # True
+print(check_subarray_sum([23, 2, 6, 4, 7], 13))  # False
 
 # Answer these before writing out the code but try to think through a solution before reading them
 """
-If two prefix sums have the same remainder % k, what does that tell you about the sum between them?
-Since we only need True or False, do we need remainder frequencies?
-What information do we need in order to enforce subarray length at least 2?
-If the same remainder appears multiple times, should we keep its earliest or latest index?
-Based on what we just discussed about the imaginary empty prefix, what should the hashmap initially contain?
+If two prefix sums have the same remainder % k, what does that tell you about the sum between them? That tells me that the sum between them is a multiple of k.
+Since we only need True or False, do we need remainder frequencies? No, we do not need remainder frequncies. We only care about the existence and location. Not the amount of occurences.
+What information do we need in order to enforce subarray length at least 2? We will need to keep track of indices of prefix sum remainder values. This can be done in a hashmap.
+If the same remainder appears multiple times, should we keep its earliest or latest index? We would want to keep the earliest one because we are looking for a subarray that has a sum which is a multiple of k
+AND the subarray has to be at least of length 2. So only counting the earliest occurence gives us our best shot at finding a subarray with >= 2 length. 
+Based on what we just discussed about the imaginary empty prefix, what should the hashmap initially contain? {0:-1} since before the array there exists a 0 prefix sum remainder.
 """
