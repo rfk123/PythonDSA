@@ -101,9 +101,9 @@ def length_of_longest_substring(s: str) -> int:
 
 
 # Test cases
-print(length_of_longest_substring("abcabcbb"))  # 3
-print(length_of_longest_substring("bbbbb"))     # 1
-print(length_of_longest_substring("pwwkew"))    # 3)
+# print(length_of_longest_substring("abcabcbb"))  # 3
+# print(length_of_longest_substring("bbbbb"))     # 1
+# print(length_of_longest_substring("pwwkew"))    # 3)
 
 
 # Answer these questions before coding but think of a solution before answering
@@ -118,4 +118,48 @@ What invariant should be true after shrinking? The substring should only contain
 think about). After shrinking, the subtring contains only unique chracters and we update the max_length if the length is > the current max_length. 
 What are the time and space complexities? The set may end up being the complete size of the string, however, if we are only using lower case letters then that size is capped at O(26). So I think space is 
 O(26) worst case? However, we loop through the array visiting each character and adding or removign from our set so I think O(n) for time complexity.
+"""
+
+# Longest subarray with at most k distinct values
+
+
+def longest_k_distinct(nums: list[int], k: int) -> int:
+    """
+    Return the length of the longest contiguous subarray
+    containing at most k distinct values.
+    """
+    window_distinct_vals = {}
+    max_length = 0
+    right = 0
+    left = 0
+    while right < len(nums):
+        window_distinct_vals[nums[right]] = window_distinct_vals.get(
+            nums[right], 0) + 1
+        while len(window_distinct_vals) > k:
+            window_distinct_vals[nums[left]] -= 1
+            if window_distinct_vals[nums[left]] == 0:
+                del window_distinct_vals[nums[left]]
+            left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+# Test cases
+print(longest_k_distinct([1, 2, 1, 2, 3], 2))   # 4
+print(longest_k_distinct([1, 2, 1, 3, 4], 3))   # 4
+print(longest_k_distinct([1, 1, 1], 1))         # 3)
+
+
+# Answer these questions before coding but think of a solution before looking at these questions
+"""
+What clues suggest a sliding-window approach? I am thinking that this problem sugests that I use a sliding window pattern because we are corncerning ourselves with finding a contiguous
+subarry of size k or smaller that contains only unique values.
+Why is a set alone not enough here? A set won't be enough here because it won't let us count the number of times a UNIQUE character occurs within our window. distinct and repeating are two different things.
+What should the hashmap represent? The hashmap will represent all of the distinct characters inside of our subarray with each of their frequency counts stored alongside them. 
+What condition makes the window invalid? if there are more than k distinct values in our subarray then it is invalid
+When shrinking, what must happen when a frequency reaches 0? If a cvharacters frequency drops to 0 when shrinking then we must remove that character from our hashmap
+What invariant should hold after the shrinking loop finishes? After shrinking concludes, the subarray from nums[left:right+1] will contain k or less distinct characters and those characters along with their 
+frequencies will be stored in our hashmap.
+Time and space complexity? Time complexity should be O(n) since adding and removing from hashmaps is O(1). Space complexity is O(n).
 """
