@@ -64,9 +64,9 @@ def min_subarray_len(target: int, nums: list[int]) -> int:
 
 
 # test cases
-print(min_subarray_len(7, [2, 3, 1, 2, 4, 3]))  # 2
-print(min_subarray_len(4, [1, 4, 4]))           # 1
-print(min_subarray_len(11, [1, 1, 1, 1, 1]))    # 0
+# print(min_subarray_len(7, [2, 3, 1, 2, 4, 3]))  # 2
+# print(min_subarray_len(4, [1, 4, 4]))           # 1
+# print(min_subarray_len(11, [1, 1, 1, 1, 1]))    # 0
 
 # answer these problems before writing any code but think of an answer before looking at these questions
 """
@@ -77,4 +77,45 @@ with prefix sum or something.
 When should you expand? We should expand when the subarray sum is < target
 When should you shrink? We should shrink when the subarray sum is >= target
 What invariant should be true when you update the minimum length? Everytime we update the minimum length we know that the subarray window (nums[left, right + 1]) sum is >= target.
+"""
+
+
+# Longest Substring without repeating characters
+def length_of_longest_substring(s: str) -> int:
+    """
+    Return the length of the longest substring
+    without repeating characters.
+    """
+    window_chars = set()
+    left = 0
+    right = 0
+    max_length = 0
+    while right < len(s):
+        while s[right] in window_chars:
+            window_chars.remove(s[left])
+            left += 1
+        window_chars.add(s[right])
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+# Test cases
+print(length_of_longest_substring("abcabcbb"))  # 3
+print(length_of_longest_substring("bbbbb"))     # 1
+print(length_of_longest_substring("pwwkew"))    # 3)
+
+
+# Answer these questions before coding but think of a solution before answering
+"""
+Why is this a sliding-window problem? This is a sliding window problem because we are asked to look a group of contiguous charatcers that satisify a certain condition (the condition being that the window
+may only contain unqiue characters). This allows us to add from the right when its a character we dont have in the substring and remove from the left until the characters suplicate is gone before adding it.
+What exactly should the set represent? The set just represents the unique characters that exist within our substring
+When should the window shrink? The window should shrink as we try to make room for the incoming character. so we shrink until adding the character won't repeat any existing character.
+Why do we need a while, not an if, when we find a duplicate? We use a while statement because we are unsure of how many itterations it will take before we get rid of the repeating character. using an 
+if may or may not get rid of it and that uncertainty is not what we want.
+What invariant should be true after shrinking? The substring should only contain unique characters which means that the substring length is equal to the length of the set (although thats not really important to
+think about). After shrinking, the subtring contains only unique chracters and we update the max_length if the length is > the current max_length. 
+What are the time and space complexities? The set may end up being the complete size of the string, however, if we are only using lower case letters then that size is capped at O(26). So I think space is 
+O(26) worst case? However, we loop through the array visiting each character and adding or removign from our set so I think O(n) for time complexity.
 """
