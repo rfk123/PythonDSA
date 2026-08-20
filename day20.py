@@ -163,3 +163,60 @@ What invariant should hold after the shrinking loop finishes? After shrinking co
 frequencies will be stored in our hashmap.
 Time and space complexity? Time complexity should be O(n) since adding and removing from hashmaps is O(1). Space complexity is O(n).
 """
+
+
+# Find all anagrams in a string
+def find_anagrams(s: str, p: str) -> list[int]:
+    """
+    Return all starting indices of substrings in s
+    that are anagrams of p.
+    """
+    if len(p) > len(s):
+        return []
+    n = len(p)
+    right = 0
+    left = 0
+    bucket_p = [0] * 26
+    bucket_s = [0] * 26
+    result = []
+
+    for char in p:
+        index = ord(char) - ord('a')
+        bucket_p[index] += 1
+
+    while right < n:
+        index = ord(s[right]) - ord('a')
+        bucket_s[index] += 1
+        right += 1
+
+    if bucket_s == bucket_p:
+        result.append(left)
+
+    while right < len(s):
+        index_r = ord(s[right]) - ord('a')
+        index_l = ord(s[left]) - ord('a')
+        bucket_s[index_r] += 1
+        bucket_s[index_l] -= 1
+        left += 1
+        if bucket_s == bucket_p:
+            result.append(left)
+        right += 1
+    return result
+
+
+# Test cases
+print(find_anagrams("cbaebabacd", "abc"))  # [0, 6]
+print(find_anagrams("abab", "ab"))         # [0, 1, 2]
+
+# Answer these questions before writing any code but think of a solution before looking at these questions
+"""
+Why is this a fixed-size sliding window? This problem suggests a fixed-sized window because in order for two strings to be anagrams of eachother they firstly need to have the same lengths.
+What should the window size be? The window size should be the size of p
+What information do we need to compare between p and the current window? I would suggest a frequency bucket array. This array will be of size 26 and will store frequencies of each lower case letter
+that is inside the current subarray.
+What leaves the window when right advances? we will tack off an occurence of the character that the left pointer is pointing to.
+What enters the window? The character that the right pointer is pointing to.
+Why would recomputing the frequency map from scratch for every substring be wasteful? Its wasteful because the alternative is that we can just create one array and adjust the freqeuncies by removing 
+an occurence from the frequency of the value on the left and adding an occurence to the frequency of the newly added value. remaking the array each time is costly in space and time
+What are the expected time and space complexities if we assume lowercase English letters? I think space is O(1) and time is O(n).
+"""
