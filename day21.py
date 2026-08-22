@@ -63,9 +63,9 @@ def total_fruit(fruits: list[int]) -> int:
 
 
 # Test cases
-print(total_fruit([1, 2, 1]))              # 3
-print(total_fruit([0, 1, 2, 2]))           # 3
-print(total_fruit([1, 2, 3, 2, 2]))        # 4
+# print(total_fruit([1, 2, 1]))              # 3
+# print(total_fruit([0, 1, 2, 2]))           # 3
+# print(total_fruit([1, 2, 3, 2, 2]))        # 4
 
 
 # Answer these questions before coding but think of a solution before reading the questions
@@ -77,4 +77,46 @@ What must happen when a value’s frequency drops to 0? We must remove that valu
 What invariant should hold after shrinking? After shrinking is done, the subarray window of fruits[left:right+1] should only contain at most 2 distinct values and our hashmap will hold distinct values 
 along with their frequencies (the size of the hashmap will not be greater than 2)
 What are the time and space complexities? time complexity is O(n) and space complexity is worst case O(3) since the hashmap will hold at most 3 distinct values before shrinking.
+"""
+
+
+# Valid Palindrome II
+def valid_palindrome_ii(s: str) -> bool:
+    """
+    Return True if s can become a palindrome
+    after deleting at most one character.
+    """
+    left = 0
+    right = len(s) - 1
+    while left < right:
+        if s[left] != s[right]:
+            return (is_palindrome(s, left, right - 1) or is_palindrome(s, left + 1, right))
+        left += 1
+        right -= 1
+    return True
+
+
+def is_palindrome(s: str, left: int, right: int) -> bool:
+    while left < right:
+        if s[left] != s[right]:
+            return False
+        left += 1
+        right -= 1
+    return True
+
+
+# test cases
+print(valid_palindrome_ii("aba"))    # True
+print(valid_palindrome_ii("abca"))   # True
+print(valid_palindrome_ii("abc"))    # False
+
+# Answer these questions before coding but think of a solution before reading them
+"""
+What pattern does this suggest? I think that this pattern suggests that we use a two pointer solution with a deletion count.
+What should happen when s[left] == s[right]? Nothing, this means that our string is still so far a valid palindrome
+What should happen at the first mismatch? At the first mismatch we need to increment our deletion count and then decide which way we need to expand (I am thinking of starting two pointers in the center
+of the string and then moving those outwards))
+Why are there only two meaningful choices at that mismatch? whether to expand the right or left pointer.
+After using our one allowed deletion, what simpler problem are we checking? s[left] == s[right] and if it doesnt and the deletion count is already 1, then we return False
+What are the time and space complexities?
 """
