@@ -24,9 +24,9 @@ def longest_subarray(nums: list[int]) -> int:
 
 
 # Test cases
-print(longest_subarray([1, 1, 0, 1]))      # 3
-print(longest_subarray([0, 1, 1, 1, 0, 1, 1, 0, 1]))  # 5
-print(longest_subarray([1, 1, 1]))         # 2
+# print(longest_subarray([1, 1, 0, 1]))      # 3
+# print(longest_subarray([0, 1, 1, 1, 0, 1, 1, 0, 1]))  # 5
+# print(longest_subarray([1, 1, 1]))         # 2
 
 # Answer these questions before coding but think of a solution before you read these questions
 """
@@ -36,4 +36,45 @@ What information do you actually need to track inside the window? The number of 
 Once the window is valid, why might the answer be window_length - 1 rather than just window_length? Because this means that if there is a zero in the subarray then we don't count that 0 in the length.
 Why does the all-ones case matter? I dont think it does because we still have to delete an element even if the suabarray contains only 1s.
 What invariant should hold after shrinking? A shrinking has complete, the subarray window will only contain at most one 0 and any amount of 1s in the range nums[left:right + 1].
+"""
+
+
+# Fruit into baskets
+def total_fruit(fruits: list[int]) -> int:
+    """
+    Return the length of the longest contiguous subarray
+    containing at most two distinct values.
+    """
+    distinct_vals = {}
+    max_length = 0
+    left = 0
+    right = 0
+
+    while right < len(fruits):
+        distinct_vals[fruits[right]] = distinct_vals.get(fruits[right], 0) + 1
+        while len(distinct_vals) > 2:
+            distinct_vals[fruits[left]] -= 1
+            if distinct_vals[fruits[left]] == 0:
+                del distinct_vals[fruits[left]]
+            left += 1
+        max_length = max(max_length, right - left + 1)
+        right += 1
+    return max_length
+
+
+# Test cases
+print(total_fruit([1, 2, 1]))              # 3
+print(total_fruit([0, 1, 2, 2]))           # 3
+print(total_fruit([1, 2, 3, 2, 2]))        # 4
+
+
+# Answer these questions before coding but think of a solution before reading the questions
+"""
+What familiar problem is this secretly equivalent to? Kind of like repeating chracters or the longest k distinct questions.
+What should the hashmap represent? The hashmap should represents the distinct values and their frequencies
+When does the window become invalid? A window becomes invalid every time there are more than 2 distinct values
+What must happen when a value’s frequency drops to 0? We must remove that value from the hashmap
+What invariant should hold after shrinking? After shrinking is done, the subarray window of fruits[left:right+1] should only contain at most 2 distinct values and our hashmap will hold distinct values 
+along with their frequencies (the size of the hashmap will not be greater than 2)
+What are the time and space complexities? time complexity is O(n) and space complexity is worst case O(3) since the hashmap will hold at most 3 distinct values before shrinking.
 """
