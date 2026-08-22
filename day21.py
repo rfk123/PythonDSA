@@ -106,9 +106,9 @@ def is_palindrome(s: str, left: int, right: int) -> bool:
 
 
 # test cases
-print(valid_palindrome_ii("aba"))    # True
-print(valid_palindrome_ii("abca"))   # True
-print(valid_palindrome_ii("abc"))    # False
+# print(valid_palindrome_ii("aba"))    # True
+# print(valid_palindrome_ii("abca"))   # True
+# print(valid_palindrome_ii("abc"))    # False
 
 # Answer these questions before coding but think of a solution before reading them
 """
@@ -119,4 +119,39 @@ of the string and then moving those outwards))
 Why are there only two meaningful choices at that mismatch? whether to expand the right or left pointer.
 After using our one allowed deletion, what simpler problem are we checking? s[left] == s[right] and if it doesnt and the deletion count is already 1, then we return False
 What are the time and space complexities?
+"""
+
+
+# Container with most water
+def max_area(height: list[int]) -> int:
+    """
+    Return the maximum amount of water that can be contained
+    between two vertical lines.
+    """
+    left = 0
+    right = len(height) - 1
+    max_area = 0
+    while left < right:
+        low_height = min(height[left], height[right])
+        max_area = max(max_area, low_height * (right - left))
+        if height[left] > height[right]:
+            right -= 1
+        else:
+            left += 1
+    return max_area
+
+
+# Test cases
+print(max_area([1, 8, 6, 2, 5, 4, 8, 3, 7]))  # 49
+print(max_area([1, 1]))                          # 1
+
+
+# Answer these questions before coding but think of a solution before reading these
+"""
+What determines the area between two indices? The 'height' of the shortest wall and the length between the 'walls' (the indices left and right)
+If you start with one pointer at each end, which pointer should move inward? The pointer with the lowest value
+Why would moving the taller side usually not help? Because you would be throwing a way an oportunity to build a maximum area by keeping the lowest wall. It is kind of a greedy solution where you take 
+the most likely value to give you the largest area right?
+What invariant or reasoning lets us safely discard one side? We discard the side with the lowwer wall since we can build a greater area with a larger wall rather than keeping the lowwer one. 
+What are the time and space complexities? Time complexity is O(n) because each value is visited at most once. Space complexity is O(1).
 """
