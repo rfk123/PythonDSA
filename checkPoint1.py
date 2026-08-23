@@ -119,3 +119,33 @@ def same_unique_characters(s: str, t: str) -> bool:
 
 
 print(same_unique_characters("aab", "abb"))
+
+
+"""
+1. Which system(s) act as clients and which act as servers?
+So the customer's CRM data (client side) will be sent via HTTP to the enrichment provider (server side)
+2. Roughly what HTTP request would you expect to make to the enrichment provider?
+Think about method, endpoint, headers and possibly parameters/body.
+So a request includes a method, url, header(s), and body. 
+method: GET (because we want to receive information and not alter anything)
+url: /companies
+headers: maybe content-type and authorization (to describe that what we are sending is JSON and that we are authorized to send this)
+body:
+{
+company_name: "Borant Corp",
+}
+
+3. What would you expect the enrichment provider to return?
+Well the enrichment provider will enrich the pre-existing data that the client already has so maybe some body like:
+{
+company_name: "Borant Corp",
+employee_count: 508,
+corupt: True,
+}
+4. Once you receive that response, what needs to happen to get the information back into the CRM?
+I imagine that we need to verify the data being returned, perform some business logic, transform the data in some way, write to a db, then
+put the company back into the CRM (I dont really know what CRM means)
+5. What are some things you can already imagine going wrong?
+There are plenty of things that could go wrong such as: wrong auth token, wrong route url, mismatched body data type with header content-type, 
+we could be unaware with what the enrichment provider api returns and expect the wrong thing, etc.
+"""
