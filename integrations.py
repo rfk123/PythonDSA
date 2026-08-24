@@ -41,4 +41,36 @@ else:
 
 
 def enrich_company(domain):
-    pass
+    """
+    The workflow of this function is to take the domain, send an http request to DATACO, receive the data and return it.
+    DataCo expects GET https://api.example.com/companies with ?domain=<domain>
+    It also expects and Authorization and Accept header
+    If successfull, the external api will respond with the fields: name, employee_count, industry, and location.
+    """
+    # Validate the input
+    if not domain or not isinstance(domain, str):
+        raise ValueError("domain must be a non-empty string")
+
+    url = "https://api.example.com/companies"
+    api_key = os.environ["DATACO_API_KEY"]
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Accept": "application/json"
+    }
+    params = {
+        "domain": domain
+    }
+
+    response = requests.get(
+        url,
+        headers=headers,
+        params=params,
+        timeout=10
+    )
+
+    if response.status_code == 200:
+        data = response.json()
+    else:
+        return None
+
+    return data
