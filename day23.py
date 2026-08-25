@@ -41,3 +41,38 @@ If triplet_sum > target, which pointer should move? right pointer should move in
 What can you do if triplet_sum == target? return the target sum
 What do you expect the time and space complexities to be? I expect a time complexity of O(n^2) and a space complexity of O(1)
 """
+
+
+# 4Sum II-style pair counting
+def four_sum_count(
+    nums1: list[int],
+    nums2: list[int],
+    nums3: list[int],
+    nums4: list[int]
+) -> int:
+    """
+    Return the number of tuples (i, j, k, l) such that:
+
+    nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+    """
+    pass
+
+
+# Test cases
+print(four_sum_count(
+    [1, 2],
+    [-2, -1],
+    [-1, 2],
+    [0, 2]
+))  # 2
+
+
+# Answer these questions before coding a solution but think of a solution before looking at these
+"""
+What would the brute-force time complexity be? I would imagine four for loops so O(n^4)
+Can you split the four-number equation into two two-number equations? yeah I guess you could have a sum from nums1
+If you compute every sum from nums1 + nums2, what information should a hashmap store?
+When you later compute a sum from nums3 + nums4, what complementary value are you looking for?
+Why do we need frequencies rather than just a set?
+What do you expect the optimized time and space complexities to be?
+"""
