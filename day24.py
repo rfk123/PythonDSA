@@ -29,10 +29,10 @@ def merge(nums1: list[int], m: int, nums2: list[int], n: int) -> None:
 
 
 # Test Cases
-nums1 = [1, 2, 3, 0, 0, 0]
-nums2 = [2, 5, 6]
+nums1 = [1, 7, 0, 0, 0]
+nums2 = [0, 5, 6]
 
-print(merge(nums1, 3, nums2, 3))
+print(merge(nums1, 2, nums2, 3))
 
 # nums1 == [1, 2, 2, 3, 5, 6]
 
