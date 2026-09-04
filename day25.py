@@ -54,5 +54,6 @@ Pattern: The pattern is a single traversal with a hashmap that keeps track of pr
 Hashmap represents: key-value pairs where the keys represent prefix sums and the values represent starting indices
 Why {0: -1}: Because if we come accross an index in the array where the current_sum up to that point is equal to k then we know that every value from [0:i+1] sums to k 
 and when we return the length of that subarray we don't count the prefix sum at the starting idice which is -1
-Invariant: 
+Invariant: The invariant is something like: For every itteration through nums, nums[0:i+1] have been processed where the current_sum reflects the current running sum and
+prefix sums have been stored in starting_points with the earliest index attached as their values. 
 """
