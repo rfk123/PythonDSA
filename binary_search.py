@@ -25,3 +25,41 @@ def binary_search(nums: list[int], val: int) -> bool:
 nums = [1, 3, 5, 7, 9, 11]
 target = 20
 print(binary_search(nums, target))
+
+
+def first_occurrence(nums: list[int], val: int) -> int:
+    # Use binary search to find the first occurence of val in the input array
+    # If no occurence then return -1
+    """
+    Explain thought:
+    Binary search is used on data where a condition is able to split the data in half at each step in order to find something.
+    First occurence could be solved with just a simple for loop but binary search allows us a more optimized solution of O(logn) instead of O(n)
+    We use pointers at opposite ends to search the value at the middle of each interval. If the middle value is lower than the input value
+    then we move the left pointer to mid + 1 index. If the middle value is greater than the input value then we move the right pointer
+    to mid - 1. Otherwise the mid pointer is pointing to a value that matches our input value.
+    My initial idea was to perform binary search until nums[mid] == value and then move our left pointer up one step at a time until 
+    nums[left] == value but that doesn't really make sense for a very large input even if the array is sorted. The more efficient solution
+    would be to have a result variable where we can store the indice of the first occurence of the val and every time our mid pointer points
+    to a value that is == value then it updates result to be = to that index and then it moves the right pointer to mid - 1 (we don't stop 
+    the search until left > right because there could be more occurences of value in [left: mid])
+    """
+    left = 0
+    right = len(nums) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == val:
+            result = mid
+            right = mid - 1
+        elif nums[mid] > val:
+            right = mid - 1
+        else:
+            left = mid + 1
+
+    return result
+
+
+print(first_occurrence([1, 2, 2, 2, 3, 4], 2))  # 1
+print(first_occurrence([1, 2, 3, 4], 3))        # 2
+print(first_occurrence([1, 2, 3, 4], 5))        # -1
