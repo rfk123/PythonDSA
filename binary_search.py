@@ -63,3 +63,25 @@ def first_occurrence(nums: list[int], val: int) -> int:
 print(first_occurrence([1, 2, 2, 2, 3, 4], 2))  # 1
 print(first_occurrence([1, 2, 3, 4], 3))        # 2
 print(first_occurrence([1, 2, 3, 4], 5))        # -1
+
+
+def last_occurrence(nums: list[int], target: int) -> int:
+    left = 0
+    right = len(nums) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            result = mid
+            left = mid + 1
+        elif nums[mid] > target:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return result
+
+
+print(last_occurrence([1, 2, 2, 2, 3, 4], 2))  # 3
+print(last_occurrence([1, 2, 3, 4], 3))        # 2
+print(last_occurrence([1, 2, 3, 4], 5))        # -1
