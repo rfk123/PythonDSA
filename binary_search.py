@@ -60,9 +60,9 @@ def first_occurrence(nums: list[int], val: int) -> int:
     return result
 
 
-print(first_occurrence([1, 2, 2, 2, 3, 4], 2))  # 1
-print(first_occurrence([1, 2, 3, 4], 3))        # 2
-print(first_occurrence([1, 2, 3, 4], 5))        # -1
+# print(first_occurrence([1, 2, 2, 2, 3, 4], 2))  # 1
+# print(first_occurrence([1, 2, 3, 4], 3))        # 2
+# print(first_occurrence([1, 2, 3, 4], 5))        # -1
 
 
 def last_occurrence(nums: list[int], target: int) -> int:
@@ -82,6 +82,53 @@ def last_occurrence(nums: list[int], target: int) -> int:
     return result
 
 
-print(last_occurrence([1, 2, 2, 2, 3, 4], 2))  # 3
-print(last_occurrence([1, 2, 3, 4], 3))        # 2
-print(last_occurrence([1, 2, 3, 4], 5))        # -1
+# print(last_occurrence([1, 2, 2, 2, 3, 4], 2))  # 3
+# print(last_occurrence([1, 2, 3, 4], 3))        # 2
+# print(last_occurrence([1, 2, 3, 4], 5))        # -1
+
+
+def search_range(nums: list[int], target: int) -> list[int]:
+    """
+    Return [first_index, last_index] of target in nums.
+    Return [-1, -1] if target does not exist.
+    """
+    first = first_occurrence(nums, target)
+    last = last_occurrence(nums, target)
+    return [first, last]
+
+
+# print(search_range([5, 7, 7, 8, 8, 10], 8))  # [3, 4]
+# print(search_range([5, 7, 7, 8, 8, 10], 6))  # [-1, -1]
+# print(search_range([], 0))                   # [-1, -1]
+
+
+def search_rotated(nums: list[int], target: int) -> int:
+    """
+    Return the index of target in a rotated sorted array.
+    Return -1 if target does not exist.
+    """
+    left = 0
+    right = len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[right] > nums[mid]:  # if the right side is sorted
+            if nums[mid] <= target <= nums[right]:  # if the val is within the range of right side
+                left = mid + 1
+            else:  # if it is not within that range then we should check the other side
+                right = mid - 1
+        # if the left side is sorted (if one side is not sorted then the other side is sorted)
+        else:
+            # if the target value lies within the range of nums[left:mid+1]
+            if nums[left] <= target <= nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+
+    return -1
+
+
+print(search_rotated([3, 1], 1))  # 2
+print(search_rotated([4, 5, 6, 7, 0, 1, 2], 6))  # -1
+print(search_rotated([1], 0))                    # -1
