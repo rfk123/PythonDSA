@@ -132,3 +132,34 @@ def search_rotated(nums: list[int], target: int) -> int:
 print(search_rotated([3, 1], 1))  # 2
 print(search_rotated([4, 5, 6, 7, 0, 1, 2], 6))  # -1
 print(search_rotated([1], 0))                    # -1
+
+
+def find_min(nums: list[int]) -> int:
+    """
+    nums was originally sorted in ascending order,
+    then rotated.
+
+    Return the minimum value.
+
+    Assume nums contains distinct values.
+    """
+    if not nums:
+        return -1
+    left = 0
+    right = len(nums) - 1
+    if nums[left] <= nums[right]:
+        return nums[left]
+    while left < right:
+        mid = (left + right) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+
+    return nums[left]
+
+
+# [4, 5, 1, 2, 3]
+print(find_min([4, 5, 1, 2, 3]))        # 1
+print(find_min([4, 5, 6, 7, 0, 1, 2]))  # 0
+print(find_min([11, 13, 15, 17]))       # 11
