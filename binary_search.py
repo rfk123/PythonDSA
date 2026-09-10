@@ -192,3 +192,20 @@ def find_peak_element(nums: list[int]) -> int:
 
 print(find_peak_element([1, 2, 3, 1]))        # 2
 print(find_peak_element([0, 8, 9]))  # 1 or 5
+
+
+def min_eating_speed(piles: list[int], h: int) -> int:
+    left = 1
+    right = max(piles)
+    while left <= right:
+        mid = (left + right) // 2
+        hours = 0
+        for pile in piles:
+            hours += (pile + mid - 1) // mid
+
+        if hours <= h:
+            right = mid
+        else:
+            left = mid + 1
+
+    return left
