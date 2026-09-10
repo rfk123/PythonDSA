@@ -33,3 +33,5 @@ print(longest_consecutive([]))  # 4
 # sequence: 1, 2, 3, 4
 
 print(longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))  # 9
+
+

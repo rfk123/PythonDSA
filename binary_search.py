@@ -163,3 +163,32 @@ def find_min(nums: list[int]) -> int:
 print(find_min([4, 5, 1, 2, 3]))        # 1
 print(find_min([4, 5, 6, 7, 0, 1, 2]))  # 0
 print(find_min([11, 13, 15, 17]))       # 11
+
+
+def find_peak_element(nums: list[int]) -> int:
+    """
+    Return the index of any peak element.
+
+    A peak is an element strictly greater than its neighbors.
+
+    You may assume:
+    nums[-1] = nums[n] = -infinity
+    nums[i] != nums[i + 1]
+
+    Your solution should run in O(log n).
+    """
+    left = 0
+    right = len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+
+        if nums[mid] > nums[mid + 1]:
+            right = mid
+        else:
+            left = mid + 1
+
+    return right
+
+
+print(find_peak_element([1, 2, 3, 1]))        # 2
+print(find_peak_element([0, 8, 9]))  # 1 or 5
