@@ -238,3 +238,47 @@ weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 days = 5
 
 print(ship_within_days(weights, days))
+
+
+def min_days(bloom_day: list[int], m: int, k: int) -> int:
+    """
+    Return the minimum day needed to make m bouquets.
+
+    Each bouquet requires k adjacent flowers.
+    A flower can be used if bloom_day[i] <= chosen_day.
+
+    Return -1 if it is impossible.
+    """
+    # notice the return -1 if impossible, well the only way it is impossible is if we don't have enough flowers to make m bouqets of k flowers
+    if m * k > len(bloom_day):
+        return -1
+
+    # set our binary search boundaries to be the first bloom day and the last
+    left = min(bloom_day)
+    right = max(bloom_day)
+
+    while left < right:
+        mid = (left + right) // 2
+        # the invariant is that there is always a solution in the range [left:right]
+        # We need to figure out if day mid is viable or not
+        flower_count = 0
+        bouqet_count = 0
+
+        for flower in bloom_day:
+            if flower <= mid:
+                flower_count += 1
+                if flower_count == k:
+                    bouqet_count += 1
+                    flower_count = 0
+            else:
+                flower_count = 0
+
+        if bouqet_count >= m:
+            right = mid
+        else:
+            left = mid + 1
+
+    return left
+
+
+print(min_days([7, 7, 7, 7, 12, 7, 7], 2, 3))
