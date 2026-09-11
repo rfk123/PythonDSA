@@ -209,3 +209,32 @@ def min_eating_speed(piles: list[int], h: int) -> int:
             left = mid + 1
 
     return left
+
+
+def ship_within_days(weights: list[int], days: int) -> int:
+    left = max(weights)
+    right = sum(weights)
+    while left < right:
+        mid = (left + right) // 2
+        days_spent = 1
+        current_weight = 0
+
+        for package in weights:
+            if current_weight + package > mid:
+                days_spent += 1
+                current_weight = package
+            else:
+                current_weight += package
+
+        if days_spent <= days:
+            right = mid
+        else:
+            left = mid + 1
+
+    return left
+
+
+weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+days = 5
+
+print(ship_within_days(weights, days))
