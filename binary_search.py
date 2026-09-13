@@ -1,7 +1,8 @@
-
+import math
 
 # binary search works when the search space (data structure) is ordered in a way that lets one comparison eliminate an entire half of the remaining candidates.
 # The invariant: If the target exists, it must be somewhere within the search interval
+
 
 def binary_search(nums: list[int], val: int) -> bool:
     # perform binary search on a sorted list of integers
@@ -282,3 +283,47 @@ def min_days(bloom_day: list[int], m: int, k: int) -> int:
 
 
 print(min_days([7, 7, 7, 7, 12, 7, 7], 2, 3))
+
+
+def smallest_divisor(nums: list[int], threshold: int) -> int:
+    """
+    Choose a positive divisor d.
+
+    For each num in nums, compute ceil(num / d).
+    Return the smallest divisor such that the sum
+    of those rounded-up values is <= threshold.
+    """
+    left = 1
+    right = max(nums)
+
+    while left < right:
+        mid = (left + right) // 2
+        current_sum = 0
+
+        for num in nums:
+            current_sum += math.ceil(num/mid)
+
+        if current_sum <= threshold:
+            right = mid
+        else:
+            left = mid + 1
+
+    return left
+
+
+# test case
+print(smallest_divisor([1, 2, 5, 9], 6))  # 5
+
+# Before coding, write these out
+"""
+Search space: The search space is going to be 1 to whatever the largest value in nums is 
+Monotonic condition:
+Lower bound:
+Upper bound:
+If mid works: if mid works the we need to move left to mid
+If mid fails: right moves to mid - 1
+Invariant: There is always a solution in the range [left:right]
+Time: O(nlogn)
+Space: O(1)
+"""
+# print(math.ceil(1/5))
