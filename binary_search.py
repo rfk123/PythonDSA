@@ -327,3 +327,65 @@ Time: O(nlogn)
 Space: O(1)
 """
 # print(math.ceil(1/5))
+
+
+# def search_matrix(matrix: list[list[int]], target: int) -> bool:
+#     for arr in matrix:
+#         if target <= arr[-1]:
+#             left = 0
+#             right = len(arr) - 1
+#             while left <= right:
+#                 mid = (left + right) // 2
+#                 if arr[mid] == target:
+#                     return True
+#                 elif arr[mid] > target:
+#                     right = mid - 1
+#                 else:
+#                     left = mid + 1
+#             return False
+#     return False
+
+
+# matrix = [
+#     [1, 3, 5, 7],
+#     [10, 11, 16, 20],
+#     [23, 30, 34, 60]
+# ]
+
+# print(search_matrix(matrix, 3))   # True
+# print(search_matrix(matrix, 13))  # False
+
+
+def search_matrix(matrix: list[list[int]], target: int) -> bool:
+    left = 0
+    right = len(matrix) * len(matrix[0]) - 1
+    # number of columns
+    cols = len(matrix[0])
+    while left <= right:
+        mid = (left + right) // 2
+        # find the position in our matrix that we want to check (using our flattened mid index and the length of a row, find the value to compare with target)
+        # current row that our mid index is on
+        row = mid // cols
+        # current column that our mid index is in
+        col = mid % cols
+
+        mid_val = matrix[row][col]
+
+        if mid_val == target:
+            return True
+        elif mid_val < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return False
+
+
+matrix = [
+    [1, 3, 5, 7],
+    [10, 11, 16, 20],
+    [23, 30, 34, 60]
+]
+
+print(search_matrix(matrix, 3))   # True
+print(search_matrix(matrix, 13))  # False
