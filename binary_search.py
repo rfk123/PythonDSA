@@ -389,3 +389,76 @@ matrix = [
 
 print(search_matrix(matrix, 3))   # True
 print(search_matrix(matrix, 13))  # False
+
+
+matrix_test = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+for i in range(len(matrix_test)):
+    for j in range(len(matrix_test[i])):
+        print(matrix_test[i][j])
+    print()
+
+# Learning neighbor checks using 4 different neighbor directions
+
+
+# matrix excercise
+def row_with_largest_sum(matrix: list[list[int]]) -> int:
+    """
+    Return the index of the row with the largest sum.
+
+    Assume:
+    - matrix is non-empty
+    - all rows have the same length
+    - if multiple rows have the same maximum sum,
+      return the first one
+    """
+    max_sum = float("-inf")
+    max_row = 0
+    for i in range(len(matrix)):
+        current_sum = 0
+        for j in range(len(matrix[0])):
+            current_sum += matrix[i][j]
+        if current_sum > max_sum:
+            max_sum = current_sum
+            max_row = i
+    return max_row
+
+
+matrix = [
+    [1, 2, 3],      # sum = 6
+    [4, 1, 2],      # sum = 7
+    [0, 10, -1]     # sum = 9
+]
+
+print(row_with_largest_sum(matrix))  # 2
+
+
+def find_target(matrix: list[list[int]], target: int) -> tuple[int, int]:
+    """
+    Return (row, col) of target if it exists.
+    Otherwise return (-1, -1).
+
+    Assume:
+    - matrix is non-empty
+    - all rows have the same length
+    """
+    for row in range(len(matrix)):
+        for col in range(len(matrix[row])):
+            if matrix[row][col] == target:
+                return (row, col)
+
+    return (-1, -1)
+
+
+matrix = [
+    [4, 8, 1],
+    [7, 3, 9],
+    [5, 2, 6]
+]
+
+print(find_target(matrix, 9))   # (1, 2)
+print(find_target(matrix, 10))  # (-1, -1)
