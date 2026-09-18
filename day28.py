@@ -27,3 +27,12 @@ print(is_valid("()[]{}"))   # True
 print(is_valid("([{}])"))   # True
 print(is_valid("(]"))       # False
 print(is_valid("(["))     # False
+
+
+def eval_rpn(tokens: list[str]) -> int:
+    pass
+
+
+tokens = ["2", "1", "+", "3", "*"]
+
+print(eval_rpn(tokens))
