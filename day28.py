@@ -30,7 +30,28 @@ print(is_valid("(["))     # False
 
 
 def eval_rpn(tokens: list[str]) -> int:
-    pass
+
+    stack = []
+    operations = set(['+', '-', '/', '*'])
+
+    for i in range(len(tokens)):
+        if tokens[i] in operations:
+            if len(stack) < 2:
+                return -1
+            secondary = stack.pop()
+            primary = stack.pop()
+            if tokens[i] == '+':
+                stack.append(primary + secondary)
+            elif tokens[i] == '-':
+                stack.append(primary - secondary)
+            elif tokens[i] == '/':
+                stack.append(primary / secondary)
+            else:
+                stack.append(primary * secondary)
+        else:
+            stack.append(int(tokens[i]))
+
+    return stack[0]
 
 
 tokens = ["2", "1", "+", "3", "*"]
