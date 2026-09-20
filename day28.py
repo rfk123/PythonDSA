@@ -72,3 +72,17 @@ def warmer_days(temps: list[int]) -> list[int]:
 
 temperatures = [73, 74, 75, 71, 69, 72, 76, 73]
 print(warmer_days(temperatures))
+
+
+def next_greater_element(nums: list[int]) -> list[int]:
+    stack = []
+    result = [-1] * len(nums)
+    for i, num in enumerate(nums):
+        while stack and nums[stack[-1]] < num:
+            prev_index = stack.pop()
+            result[prev_index] = num
+        stack.append(i)
+    return result
+
+
+print(next_greater_element([2, 1, 2, 4, 3]))
