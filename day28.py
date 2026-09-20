@@ -36,8 +36,6 @@ def eval_rpn(tokens: list[str]) -> int:
 
     for i in range(len(tokens)):
         if tokens[i] in operations:
-            if len(stack) < 2:
-                return -1
             secondary = stack.pop()
             primary = stack.pop()
             if tokens[i] == '+':
@@ -57,3 +55,20 @@ def eval_rpn(tokens: list[str]) -> int:
 tokens = ["2", "1", "+", "3", "*"]
 
 print(eval_rpn(tokens))
+
+
+def warmer_days(temps: list[int]) -> list[int]:
+    stack = []
+    result = [0] * len(temps)
+
+    for i, temp in enumerate(temps):
+        while stack and temps[stack[-1]] < temp:
+            prev_temp = stack.pop()
+            days = i - prev_temp
+            result[prev_temp] = days
+        stack.append(i)
+    return result
+
+
+temperatures = [73, 74, 75, 71, 69, 72, 76, 73]
+print(warmer_days(temperatures))
