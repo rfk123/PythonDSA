@@ -124,3 +124,27 @@ def largest_rectangle(heights: list[int]) -> int:
 
 
 print(largest_rectangle([2, 1, 5, 6, 2, 3]))
+
+
+def other_largest_rectangle(heights: list[int]) -> int:
+    stack = []
+    max_area = 0
+
+    for i, h in enumerate(heights):
+        start = i
+        while stack and stack[-1][1] > h:
+            index, height = stack.pop()
+            width = i - index
+            max_area = max(max_area, width * height)
+            start = index
+        stack.append((start, h))
+
+    while stack:
+        index, height = stack.pop()
+        width = len(heights) - index
+        max_area = max(max_area, width * height)
+
+    return max_area
+
+
+print(other_largest_rectangle([2, 1, 5, 6, 2, 3]))
