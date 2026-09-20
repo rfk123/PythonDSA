@@ -86,3 +86,41 @@ def next_greater_element(nums: list[int]) -> list[int]:
 
 
 print(next_greater_element([2, 1, 2, 4, 3]))
+
+
+def next_greater_element_2(nums: list[int]) -> list[int]:
+    stack = []
+    result = [-1] * len(nums)
+
+    for i in range(len(nums) * 2):
+        current_index = i % len(nums)
+        while stack and nums[stack[-1]] < nums[current_index]:
+            prev_index = stack.pop()
+            result[prev_index] = nums[current_index]
+        if i < len(nums):
+            stack.append(i)
+    return result
+
+
+def largest_rectangle(heights: list[int]) -> int:
+    stack = []
+    max_area = 0
+
+    for i in range(len(heights) + 1):
+        current_height = 0 if i == len(heights) else heights[i]
+
+        while stack and heights[stack[-1]] > current_height:
+            popped = stack.pop()
+            height = heights[popped]
+
+            if stack:
+                width = i - stack[-1] - 1
+            else:
+                width = i
+
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    return max_area
+
+
+print(largest_rectangle([2, 1, 5, 6, 2, 3]))
