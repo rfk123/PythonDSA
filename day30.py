@@ -60,4 +60,64 @@ grid = [
     [1, 1, 0, 0]
 ]
 
-print(count_reachable(grid))
+# print(count_reachable(grid))
+
+
+def num_islands(grid: list[list[str]]) -> int:
+    """
+    "1" = land
+    "0" = water
+
+    Land is connected up, down, left, and right.
+
+    Return the number of separate islands.
+    """
+    rows = len(grid)
+    columns = len(grid[0])
+
+    visited = set()
+    queue = deque()
+
+    directions = [
+        (1, 0),
+        (-1, 0),
+        (0, 1),
+        (0, -1)
+    ]
+
+    count = 0
+    for r in range(rows):
+        for c in range(columns):
+            if (r, c) in visited or grid[r][c] != '1':
+                continue
+            count += 1
+            queue.append((r, c))
+            visited.add((r, c))
+            while queue:
+                row, column = queue.popleft()
+
+                for dr, dc in directions:
+                    new_row = row + dr
+                    new_column = column + dc
+
+                    if not (0 <= new_row < rows and 0 <= new_column < columns):
+                        continue
+                    if (new_row, new_column) in visited:
+                        continue
+                    if grid[new_row][new_column] != '1':
+                        continue
+
+                    visited.add((new_row, new_column))
+                    queue.append((new_row, new_column))
+
+    return count
+
+
+grid = [
+    ["1", "1", "0", "0"],
+    ["1", "0", "0", "1"],
+    ["0", "0", "1", "1"],
+    ["1", "0", "0", "0"]
+]
+
+print(num_islands(grid))
