@@ -28,9 +28,11 @@ def first_occurrence(nums: list[int], target: int) -> int:
     """
     left = 0
     right = len(nums) - 1
-    while left < right:
+    result = -1
+    while left <= right:
         mid = (left + right) // 2
         if nums[mid] == target:
+            result = mid
             right = mid
         elif nums[mid] > target:
             right = mid - 1
@@ -40,4 +42,25 @@ def first_occurrence(nums: list[int], target: int) -> int:
     return left if nums[left] == target else -1
 
 
-print(first_occurrence([1, 2, 2, 2, 4, 5], 0))  # 1)
+# print(first_occurrence([1, 2, 2, 2, 4, 5], 0))  # 1)
+
+
+def subarray_sum(nums: list[int], k: int) -> int:
+    """
+    Return the number of contiguous subarrays
+    whose sum equals k.
+    """
+    count = 0
+    current_sum = 0
+    starts = {0: 1}
+    for i, num in enumerate(nums):
+        current_sum += num
+        difference = current_sum - k
+        if difference in starts:
+            count += starts[difference]
+        starts[current_sum] = starts.get(current_sum, 0) + 1
+    return count
+
+
+# print(subarray_sum([1, 1, 1], 2))  # 2
+# print(subarray_sum([1, 2, 3], 3))  # 2)
