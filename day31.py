@@ -44,4 +44,46 @@ grid = [
     ["1", "0", "0", "0"]
 ]
 
-print(number_of_islands(grid))
+# print(number_of_islands(grid))
+
+
+# LINKED LISTS YIPPIE
+
+class ListNode:
+    def __init__(self, val: int, next=None):
+        self.val = val
+        self.next = next
+
+
+def linked_list_values(head: ListNode | None) -> list[int]:
+    """
+    Return all values in the linked list in order.
+    """
+    node = head
+    result = []
+    while node:
+        result.append(node.val)
+        node = node.next
+    return result
+
+
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+
+print(linked_list_values(head))
+
+
+def reverse_list(head: ListNode | None) -> ListNode | None:
+    node = head
+    prev = None
+    while node:
+        tmp = node.next
+        node.next = prev
+        prev = node
+        node = tmp
+    head = prev
+    print(linked_list_values(head))
+
+
+reverse_list(head)
