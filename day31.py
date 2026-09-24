@@ -2,7 +2,7 @@ from collections import deque
 
 # Now lets work with DFS
 
-# The first problem will be to solve the number of islands problem again but instead of BFS I'll use DFS
+# The first problem will be to solve the number of islands problem again but instead of BFS I'll use DFS and no queue
 # BFS is breadth first search that goes level by level left to right
 # DFS is depth first search that goes all the way down and backtracks from the furthest node
 
