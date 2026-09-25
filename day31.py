@@ -87,3 +87,19 @@ def reverse_list(head: ListNode | None) -> ListNode | None:
 
 
 reverse_list(head)
+
+
+def middle_node(head: ListNode | None) -> ListNode | None:
+    """
+    Return the middle node of the linked list.
+    If there are two middle nodes, return the second one.
+    """
+    fast = head
+    slow = head
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+    return slow
+
+
+print(middle_node(head))
