@@ -103,3 +103,14 @@ def middle_node(head: ListNode | None) -> ListNode | None:
 
 
 print(middle_node(head))
+
+
+def has_cycle(head: ListNode | None) -> bool:
+    slow = head
+    fast = head
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+        if fast == slow:
+            return True
+    return False
