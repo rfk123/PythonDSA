@@ -119,12 +119,16 @@ def has_cycle(head: ListNode | None) -> bool:
 def detect_cycle_start(head: ListNode) -> ListNode | None:
     slow = head
     fast = head
+    foundCycle = False
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
         if slow == fast:
+            foundCycle = True
             break
-    else:
+    # else:
+    #     return None
+    if not foundCycle:
         return None
     slow = head
     while slow != fast:
