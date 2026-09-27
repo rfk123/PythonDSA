@@ -1,3 +1,5 @@
+from collections import deque
+
 
 class ListNode:
     def __init__(self, val: int, next=None):
@@ -62,4 +64,20 @@ def postorder(root: TreeNode | None) -> list[int]:
         dfs(node.right)
         result.append(node.val)
     dfs(root)
+    return result
+
+
+def level_order(root: TreeNode | None) -> list[int]:
+    result = []
+    if not root:
+        return result
+    queue = deque()
+    queue.append(root)
+    while queue:
+        popped = queue.popleft()
+        result.append(popped.val)
+        if popped.left:
+            queue.append(popped.left)
+        if popped.right:
+            queue.append(popped.right)
     return result
