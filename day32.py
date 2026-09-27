@@ -46,5 +46,30 @@ def output_list(node: ListNode) -> str:
     return result
 
 
-merge_two_lists(head1, head2)
+# merge_two_lists(head1, head2)
 # 0 -> 1 -> 2 -> 2 -> 3 -> 3 -> 5 -> 6 -> 6 -> 7 -> 15 -> None
+
+
+def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
+    # This solution may not work if n is the same size of the linked list
+    dummy = ListNode(0)
+    dummy.next = head
+    fast = dummy
+    slow = dummy
+    for i in range(n + 1):
+        if not fast:
+            return -1
+        fast = fast.next
+
+    while fast:
+        fast = fast.next
+        slow = slow.next
+
+    slow.next = slow.next.next
+
+    print(output_list(dummy.next))
+    return dummy.next
+
+
+remove_nth_from_end(head2, 1)
+# 0 -> 2 -> 2 -> 6 -> 6 -> 15 -> None
