@@ -5,19 +5,11 @@ class ListNode:
         self.next = next
 
 
-head1 = ListNode(1)
-head1.next = ListNode(3)
-head1.next.next = ListNode(5)
-head1.next.next.next = ListNode(2)
-head1.next.next.next.next = ListNode(1)
-head1.next.next.next.next.next = ListNode(0)
-
-
-head2 = ListNode(1)
-head2.next = ListNode(3)
-head2.next.next = ListNode(2)
-head2.next.next.next = ListNode(1)
-head2.next.next.next.next = ListNode(0)
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 def get_intersection_node(headA: ListNode | None, headB: ListNode | None) -> ListNode:
@@ -31,4 +23,17 @@ def get_intersection_node(headA: ListNode | None, headB: ListNode | None) -> Lis
     return listA
 
 
-print(get_intersection_node(head1, head2))
+# print(get_intersection_node(head1, head2))
+
+
+def preorder(root: TreeNode | None) -> list[int]:
+    result = []
+
+    def dfs(node):
+        if not node:
+            return
+        result.append(node.val)
+        dfs(node.left)
+        dfs(node.right)
+    dfs(root)
+    return result
