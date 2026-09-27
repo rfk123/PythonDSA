@@ -37,3 +37,29 @@ def preorder(root: TreeNode | None) -> list[int]:
         dfs(node.right)
     dfs(root)
     return result
+
+
+def inorder(root: TreeNode | None) -> list[int]:
+    result = []
+
+    def dfs(node):
+        if not node:
+            return
+        dfs(node.left)
+        result.append(node.val)
+        dfs(node.right)
+    dfs(root)
+    return result
+
+
+def postorder(root: TreeNode | None) -> list[int]:
+    result = []
+
+    def dfs(node):
+        if not node:
+            return
+        dfs(node.left)
+        dfs(node.right)
+        result.append(node.val)
+    dfs(root)
+    return result
