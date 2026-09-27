@@ -77,7 +77,9 @@ def next_greater(nums: list[int]) -> list[int]:
 print(next_greater([10, 8, 9, 11, 2, 3, 4, 20]))
 
 """
-time complexity:
-space complexity:
-one sentence describing the invariant or core idea:
+time complexity: O(n)
+space complexity: O(n * m)? hmm actually maybe it is O(n) since both the stack and the result array can at worst case be len(nums)
+one sentence describing the invariant or core idea: The idea here is to use future values to determine the result. The invariant is that
+our stack will always be in the order of non-ascending meaning stack[0] > stack[1] essentially. So anytime we come accross a new value
+we can continue to pop elements off our stack that are less than the current value.
 """
