@@ -28,12 +28,12 @@ head1.next.next.next = ListNode(5)
 head1.next.next.next.next = ListNode(7)
 # 1 -> 3 -> 3 -> 5 -> 7 -> None
 
-head2 = ListNode(0)
+head2 = ListNode(1)
 head2.next = ListNode(2)
-head2.next.next = ListNode(2)
-head2.next.next.next = ListNode(6)
-head2.next.next.next.next = ListNode(6)
-head2.next.next.next.next.next = ListNode(15)
+head2.next.next = ListNode(3)
+# head2.next.next.next = ListNode(1)
+# head2.next.next.next.next = ListNode(1)
+# head2.next.next.next.next.next = ListNode(0)
 # 0 -> 2 -> 2 -> 6 -> 6 -> 15 -> None
 
 
@@ -71,5 +71,40 @@ def remove_nth_from_end(head: ListNode | None, n: int) -> ListNode | None:
     return dummy.next
 
 
-remove_nth_from_end(head2, 1)
+# remove_nth_from_end(head2, 1)
 # 0 -> 2 -> 2 -> 6 -> 6 -> 15 -> None
+
+
+def is_palindrome(head: ListNode | None) -> bool:
+    dummy = ListNode(0)
+    dummy.next = head
+    slow = dummy
+    fast = dummy
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+
+    reversed = reverse_list(slow.next)
+    node = head
+
+    while reversed:
+        if node.val != reversed.val:
+            return False
+        node = node.next
+        reversed = reversed.next
+
+    return True
+
+
+def reverse_list(head: ListNode | None) -> ListNode | None:
+    prev = None
+    node = head
+    while node:
+        tmp = node.next
+        node.next = prev
+        prev = node
+        node = tmp
+    return prev
+
+
+print(is_palindrome(head2))
