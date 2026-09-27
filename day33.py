@@ -81,3 +81,23 @@ def level_order(root: TreeNode | None) -> list[int]:
         if popped.right:
             queue.append(popped.right)
     return result
+
+
+def max_depth(root: TreeNode | None) -> int:
+    # Using recursive dfs
+    # The idea is that each node's max depth is 1 + the max depth of its max child node depth
+    if not root:
+        return 0
+    queue = deque()
+    queue.append(root)
+    level = 0
+    while queue:
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        level += 1
+
+    return level
