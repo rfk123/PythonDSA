@@ -101,3 +101,27 @@ def max_depth(root: TreeNode | None) -> int:
         level += 1
 
     return level
+
+
+def is_same_tree(p: TreeNode | None, q: TreeNode | None) -> bool:
+    # Solve with DFS traversal
+    if not p and not q:
+        return True
+
+    if p and q and p.val == q.val:
+        return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)
+
+    return False  # If the structure is not the same or the value doesnt match immediately return False
+
+
+def invert_tree(head: TreeNode | None) -> TreeNode:
+    if not head:
+        return None
+
+    tmp = head.left
+    head.left = head.right
+    head.right = tmp
+
+    invert_tree(head.left)
+    invert_tree(head.right)
+    return head
