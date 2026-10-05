@@ -154,17 +154,131 @@ class TaskTracker:
                 pending.append(task)
         return sorted(pending, key=lambda task: (self.deadlines[task], task))
 
+    def delete_task(self, task_id: str) -> bool:
+        if task_id not in self.tasks:
+            return False
 
-tracker = TaskTracker()
-tracker.add_task("a", "No deadline")
-tracker.add_task("b", "Has deadline")
-tracker.set_deadline("b", 10)
+        del self.tasks[task_id]
+        del self.priorities[task_id]
+        if task_id in self.pending:
+            self.pending.remove(task_id)
+        if task_id in self.deadlines:
+            del self.deadlines[task_id]
+        return True
 
-print(tracker.overdue_pending(10))
-print(tracker.overdue_pending(11))
 
-tracker.complete_task("b")
-print(tracker.overdue_pending(11))
+# tracker = TaskTracker()
+# tracker.add_task("a", "Original")
+# tracker.set_priority("a", 9)
+# tracker.set_deadline("a", 10)
+# tracker.complete_task("a")
 
-tracker.rename_task("a", "z")
-print(tracker.get_task("z"))
+# assert tracker.delete_task("a") is True
+# assert tracker.delete_task("a") is False
+# assert tracker.get_task("a") is None
+
+# assert tracker.add_task("a", "Fresh") is True
+# assert tracker.get_task("a") == ("Fresh", False)
+# assert tracker.priorities["a"] == 0
+# assert tracker.overdue_pending(100) == []
+# assert tracker.list_pending() == ["a"]
+
+
+"""
+Rules:
+Level 1
+- add_item: Return False if the ID exists or quantity is negative. Otherwise create the item and return True. Zero is valid.
+- get_quantity: Return the quantity, or None if missing.
+- change_quantity: Add delta to the current quantity. Return False if the ID is missing or the resulting quantity would be negative; otherwise return True. A zero delta succeeds for an existing item.
+- remove_item: Remove an existing item and return True; return False if missing.
+- Failed operations leave state unchanged.
+- Separate instances have separate inventory.
+Level 2
+- list_items: Return IDs starting with prefix, alphabetically sorted. An empty prefix matches all IDs.
+- lowest_stock: Return at most limit IDs ordered by quantity ascending, then ID alphabetically. Include zero-stock items. Return [] for limit <= 0.
+transfer: Move amount units from source to destination. Return False if either ID is missing, IDs are identical, amount is nonpositive, or source stock is insufficient. Otherwise return True.
+- Failed operations leave state unchanged.
+"""
+
+
+class Inventory:
+    def __init__(self):
+        self.items = {}
+
+    def add_item(self, item_id: str, quantity: int) -> bool:
+        if item_id in self.items or quantity < 0:
+            return False
+        self.items[item_id] = quantity
+        return True
+
+    def get_quantity(self, item_id: str) -> int | None:
+        return self.items[item_id] if item_id in self.items else None
+
+    def change_quantity(self, item_id: str, delta: int) -> bool:
+        if item_id not in self.items or self.items[item_id] + delta < 0:
+            return False
+        self.items[item_id] += delta
+        return True
+
+    def remove_item(self, item_id: str) -> bool:
+        if item_id in self.items:
+            del self.items[item_id]
+            return True
+        return False
+
+    def list_items(self, prefix: str) -> list[str]:
+        matching = []
+        for item in self.items.keys():
+            if item.startswith(prefix):
+                matching.append(item)
+        return sorted(matching)
+
+    def lowest_stock(self, limit: int) -> list[str]:
+        if limit < 0:
+            return []
+
+        return sorted(self.items, key=lambda item: (self.items[item], item))[:limit]
+
+    def transfer(self, source_id: str, destination_id: str, amount: int) -> bool:
+        if source_id not in self.items or destination_id not in self.items or source_id == destination_id or amount <= 0 or self.items[source_id] < amount:
+            return False
+        self.items[source_id] -= amount
+        self.items[destination_id] += amount
+        return True
+
+
+# Tests
+# inventory = Inventory()
+
+# print(inventory.add_item("pens", 5))           # True
+# print(inventory.add_item("pens", 2))           # False
+# print(inventory.change_quantity("pens", -6))  # False
+# print(inventory.get_quantity("pens"))         # 5
+# print(inventory.change_quantity("pens", -5))  # True
+# print(inventory.get_quantity("pens"))         # 0
+# print(inventory.remove_item("pens"))          # True
+# print(inventory.get_quantity("pens"))         # None
+
+# print(inventory.add_item("pens", 5))
+# print(inventory.add_item("paper", 2))
+# print(inventory.add_item("clips", 2))
+
+# print(inventory.list_items("pa"))             # ["paper"]
+# print(inventory.lowest_stock(2))              # ["clips", "paper"]
+# print(inventory.transfer("pens", "paper", 3))  # True
+# print(inventory.get_quantity("pens"))         # 2
+# print(inventory.get_quantity("paper"))        # 5
+# print(inventory.transfer("pens", "paper", 3))  # False
+inventory = Inventory()
+inventory.add_item("a", 3)
+inventory.add_item("b", 0)
+
+assert inventory.transfer("a", "a", 1) is False
+assert inventory.transfer("a", "b", 0) is False
+assert inventory.transfer("a", "b", 4) is False
+assert inventory.get_quantity("a") == 3
+assert inventory.get_quantity("b") == 0
+
+assert inventory.transfer(source_id="a", destination_id="b", amount=3) is True
+assert inventory.get_quantity("a") == 0
+assert inventory.get_quantity("b") == 3
