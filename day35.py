@@ -204,25 +204,30 @@ transfer: Move amount units from source to destination. Return False if either I
 class Inventory:
     def __init__(self):
         self.items = {}
+        self.reservations = {}
+        self.available = {}
 
     def add_item(self, item_id: str, quantity: int) -> bool:
         if item_id in self.items or quantity < 0:
             return False
         self.items[item_id] = quantity
+        self.available[item_id] = quantity
         return True
 
     def get_quantity(self, item_id: str) -> int | None:
         return self.items[item_id] if item_id in self.items else None
 
     def change_quantity(self, item_id: str, delta: int) -> bool:
-        if item_id not in self.items or self.items[item_id] + delta < 0:
+        if item_id not in self.items or self.available[item_id] + delta < 0:
             return False
         self.items[item_id] += delta
+        self.available[item_id] += delta
         return True
 
     def remove_item(self, item_id: str) -> bool:
-        if item_id in self.items:
+        if item_id in self.items and self.available[item_id] == self.items[item_id]:
             del self.items[item_id]
+            del self.available[item_id]
             return True
         return False
 
@@ -240,45 +245,88 @@ class Inventory:
         return sorted(self.items, key=lambda item: (self.items[item], item))[:limit]
 
     def transfer(self, source_id: str, destination_id: str, amount: int) -> bool:
-        if source_id not in self.items or destination_id not in self.items or source_id == destination_id or amount <= 0 or self.items[source_id] < amount:
+        if source_id not in self.items or destination_id not in self.items or source_id == destination_id or amount <= 0 or self.items[source_id] < amount or self.available[source_id] < amount:
             return False
         self.items[source_id] -= amount
         self.items[destination_id] += amount
+        self.available[source_id] -= amount
+        self.available[destination_id] += amount
         return True
 
+    def reserve(self, reservation_id: str, item_id: str, amount: int) -> bool:
+        if reservation_id in self.reservations or item_id not in self.items or amount > self.items[item_id] or amount <= 0 or self.available[item_id] < amount:
+            return False
+        self.reservations[reservation_id] = (item_id, amount)
+        self.available[item_id] -= amount
+        return True
 
-# Tests
-# inventory = Inventory()
+    def cancel_reservation(self, reservation_id: str) -> bool:
+        if reservation_id not in self.reservations:
+            return False
+        item_id, amount = self.reservations[reservation_id]
+        self.available[item_id] += amount
+        del self.reservations[reservation_id]
+        return True
 
-# print(inventory.add_item("pens", 5))           # True
-# print(inventory.add_item("pens", 2))           # False
-# print(inventory.change_quantity("pens", -6))  # False
-# print(inventory.get_quantity("pens"))         # 5
-# print(inventory.change_quantity("pens", -5))  # True
-# print(inventory.get_quantity("pens"))         # 0
-# print(inventory.remove_item("pens"))          # True
-# print(inventory.get_quantity("pens"))         # None
+    def fulfill_reservation(self, reservation_id: str) -> bool:
+        if reservation_id not in self.reservations:
+            return False
+        item_id, amount = self.reservations[reservation_id]
+        self.items[item_id] -= amount
+        del self.reservations[reservation_id]
+        return True
 
-# print(inventory.add_item("pens", 5))
-# print(inventory.add_item("paper", 2))
-# print(inventory.add_item("clips", 2))
+    def get_available(self, item_id: str) -> int | None:
+        if item_id not in self.items:
+            return None
+        return self.available[item_id]
 
-# print(inventory.list_items("pa"))             # ["paper"]
-# print(inventory.lowest_stock(2))              # ["clips", "paper"]
-# print(inventory.transfer("pens", "paper", 3))  # True
-# print(inventory.get_quantity("pens"))         # 2
-# print(inventory.get_quantity("paper"))        # 5
-# print(inventory.transfer("pens", "paper", 3))  # False
+    def rename_item(self, old_id: str, new_id: str) -> bool:
+        if old_id not in self.items or new_id in self.items:
+            return False
+        for res, item in self.reservations.items():  # {str: tuple(str, int)}
+            if item[0] == old_id:
+                self.reservations[res] = (new_id, item[1])
+        self.available[new_id] = self.available[old_id]
+        del self.available[old_id]
+        self.items[new_id] = self.items[old_id]
+        del self.items[old_id]
+        return True
+
+        # Tests
+        # inventory = Inventory()
+
+
+        # print(inventory.add_item("pens", 5))           # True
+        # print(inventory.add_item("pens", 2))           # False
+        # print(inventory.change_quantity("pens", -6))  # False
+        # print(inventory.get_quantity("pens"))         # 5
+        # print(inventory.change_quantity("pens", -5))  # True
+        # print(inventory.get_quantity("pens"))         # 0
+        # print(inventory.remove_item("pens"))          # True
+        # print(inventory.get_quantity("pens"))         # None
+        # print(inventory.add_item("pens", 5))
+        # print(inventory.add_item("paper", 2))
+        # print(inventory.add_item("clips", 2))
+        # print(inventory.list_items("pa"))             # ["paper"]
+        # print(inventory.lowest_stock(2))              # ["clips", "paper"]
+        # print(inventory.transfer("pens", "paper", 3))  # True
+        # print(inventory.get_quantity("pens"))         # 2
+        # print(inventory.get_quantity("paper"))        # 5
+        # print(inventory.transfer("pens", "paper", 3))  # False
 inventory = Inventory()
-inventory.add_item("a", 3)
-inventory.add_item("b", 0)
+inventory.add_item("pens", 10)
+inventory.reserve("r1", "pens", 3)
+inventory.reserve("r2", "pens", 2)
 
-assert inventory.transfer("a", "a", 1) is False
-assert inventory.transfer("a", "b", 0) is False
-assert inventory.transfer("a", "b", 4) is False
-assert inventory.get_quantity("a") == 3
-assert inventory.get_quantity("b") == 0
+assert inventory.rename_item("pens", "markers")
+assert inventory.get_quantity("pens") is None
+assert inventory.get_quantity("markers") == 10
+assert inventory.get_available("markers") == 5
 
-assert inventory.transfer(source_id="a", destination_id="b", amount=3) is True
-assert inventory.get_quantity("a") == 0
-assert inventory.get_quantity("b") == 3
+assert inventory.cancel_reservation("r1")
+assert inventory.get_available("markers") == 8
+
+assert inventory.fulfill_reservation("r2")
+assert inventory.get_quantity("markers") == 8
+assert inventory.get_available("markers") == 8
