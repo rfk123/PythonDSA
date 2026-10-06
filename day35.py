@@ -296,7 +296,6 @@ class Inventory:
         # Tests
         # inventory = Inventory()
 
-
         # print(inventory.add_item("pens", 5))           # True
         # print(inventory.add_item("pens", 2))           # False
         # print(inventory.change_quantity("pens", -6))  # False
@@ -314,19 +313,82 @@ class Inventory:
         # print(inventory.get_quantity("pens"))         # 2
         # print(inventory.get_quantity("paper"))        # 5
         # print(inventory.transfer("pens", "paper", 3))  # False
-inventory = Inventory()
-inventory.add_item("pens", 10)
-inventory.reserve("r1", "pens", 3)
-inventory.reserve("r2", "pens", 2)
 
-assert inventory.rename_item("pens", "markers")
-assert inventory.get_quantity("pens") is None
-assert inventory.get_quantity("markers") == 10
-assert inventory.get_available("markers") == 5
 
-assert inventory.cancel_reservation("r1")
-assert inventory.get_available("markers") == 8
+# Equipment loan system
+class EquipmentLoans:
+    def __init__(self):
+        self.equipment = {}
+        self.loans = {}
 
-assert inventory.fulfill_reservation("r2")
-assert inventory.get_quantity("markers") == 8
-assert inventory.get_available("markers") == 8
+    def add_equipment(self, equipment_id: str, copies: int) -> bool:
+        if equipment_id in self.equipment or copies < 0:
+            return False
+        self.equipment[equipment_id] = copies
+        return True
+
+    def borrow(self, loan_id: str, equipment_id: str) -> bool:
+        if loan_id in self.loans or equipment_id not in self.equipment or self.equipment[equipment_id] <= 0:
+            return False
+        self.loans[loan_id] = (equipment_id, None)
+        self.equipment[equipment_id] -= 1
+        return True
+
+    def return_loan(self, loan_id: str) -> bool:
+        if loan_id not in self.loans:
+            return False
+        equipment_id = self.loans[loan_id][0]
+        # assuming that there is a valid equipment_id still in equipments
+        self.equipment[equipment_id] += 1
+        del self.loans[loan_id]
+        return True
+
+    def get_available(self, equipment_id: str) -> int | None:
+        if equipment_id not in self.equipment:
+            return None
+        return self.equipment[equipment_id]
+
+    def change_copies(self, equipment_id: str, delta: int) -> bool:
+        if equipment_id not in self.equipment or (self.equipment[equipment_id] + delta) < 0:
+            return False
+        self.equipment[equipment_id] += delta
+        return True
+
+    def set_due_date(self, loan_id: str, due_date: int) -> bool:
+        if loan_id not in self.loans:
+            return False
+        self.loans[loan_id] = (self.loans[loan_id][0], due_date)
+        return True
+
+    def overdue_loans(self, now: int) -> list[str]:
+        loans = []
+        for loan, equipment in self.loans.items():
+            if equipment[1] is not None and equipment[1] < now:
+                loans.append(loan)
+        return sorted(loans, key=lambda loan: (self.loans[loan][1], loan))
+
+    def extend_loan(self, loan_id: str, new_due_date: int) -> bool:
+        if loan_id not in self.loans or self.loans[loan_id][1] is None or new_due_date <= self.loans[loan_id][1]:
+            return False
+        self.loans[loan_id] = (self.loans[loan_id][0], new_due_date)
+        return True
+
+
+system = EquipmentLoans()
+assert system.add_equipment("helmet", 3)
+assert system.borrow("L2", "helmet")
+assert system.borrow("L1", "helmet")
+
+assert system.set_due_date("L2", -1)
+assert system.set_due_date("L1", -1)
+assert system.overdue_loans(-1) == []
+assert system.overdue_loans(0) == ["L1", "L2"]
+
+assert system.extend_loan("L1", -1) is False
+assert system.extend_loan("L1", 0)
+assert system.overdue_loans(0) == ["L2"]
+
+assert system.return_loan("L2")
+assert system.borrow("L2", "helmet")
+assert system.extend_loan("L2", 10) is False
+assert system.overdue_loans(1) == ["L1"]
