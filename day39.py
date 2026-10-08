@@ -32,3 +32,47 @@ def sum_strings(num1: str, num2: str) -> str:
 
 print(sum_strings("1", "9"))
 print("hello")
+
+
+class ListNode:
+    def __init__(self, val: int, next=None):
+        self.val = val
+        self.next = next
+
+
+def reverse_list(head: ListNode | None) -> ListNode | None:
+    if not head:
+        return None
+
+    prev = None
+    current = head
+    while current:
+        tmp = current.next
+        current.next = prev
+        prev = current
+        current = tmp
+    prev
+    return prev
+
+
+def output_list(head: ListNode | None) -> str | None:
+    if not head:
+        return None
+    current = head
+    result = ""
+    while current:
+        result += str(current.val)
+        current = current.next
+    return result
+
+
+start = ListNode(10)
+start.next = ListNode(9)
+start.next.next = ListNode(8)
+start.next.next.next = ListNode(7)
+start.next.next.next.next = ListNode(6)
+start.next.next.next.next.next = ListNode(5)
+
+print(output_list(start))
+start = reverse_list(start)
+print(output_list(start))
