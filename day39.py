@@ -76,3 +76,34 @@ start.next.next.next.next.next = ListNode(5)
 print(output_list(start))
 start = reverse_list(start)
 print(output_list(start))
+
+"""
+Time complexity for the reverse function is O(n) 
+Space complexity for the reverse is O(1)
+The core idea is that you keep the current node's next in a temporary variable and change the current's next pointer to the previous node.
+"""
+
+
+def search_rotated(nums: list[int], target: int) -> int:
+    """
+    nums is sorted in ascending order and only contains distinct integers. It has been rotated x amount of times. 
+    Return the index containing the element or -1.
+    """
+    if not nums:
+        return - 1
+
+    left = 0
+    right = len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < nums[right] and nums[right] >= target > nums[mid]:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return -1
+
+
+print(search_rotated([5, 1, 2, 3, 4], 2))
