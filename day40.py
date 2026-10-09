@@ -34,3 +34,22 @@ def min_subarray_len(target: int, nums: list[int]) -> int:
 
 
 print(min_subarray_len(7, [2, 3, 1, 2, 4, 3]))
+
+
+def find_min(nums: list[int]) -> int:
+    left = 0
+    right = len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+
+        if nums[mid] < nums[right]:
+            right = mid
+        else:
+            left = mid + 1
+
+    return nums[left]
+
+
+print(find_min([11, 13, 15, 17]))
+print(find_min([4, 5, 6, 7, 0, 1, 2]))
+print(find_min([3, 4, 5, 1, 2]))
