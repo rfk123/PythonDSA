@@ -53,3 +53,17 @@ def find_min(nums: list[int]) -> int:
 print(find_min([11, 13, 15, 17]))
 print(find_min([4, 5, 6, 7, 0, 1, 2]))
 print(find_min([3, 4, 5, 1, 2]))
+
+
+def daily_temperatures(temperatures: list[int]) -> list[int]:
+    stack = []
+    answer = [0] * len(temperatures)
+    for i, temp in enumerate(temperatures):
+        while stack and temperatures[stack[-1]] < temp:
+            start_index = stack.pop()
+            answer[start_index] = (i - start_index)
+        stack.append(i)
+    return answer
+
+
+print(daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]))
