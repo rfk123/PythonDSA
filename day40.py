@@ -67,3 +67,22 @@ def daily_temperatures(temperatures: list[int]) -> list[int]:
 
 
 print(daily_temperatures([73, 74, 75, 71, 69, 72, 76, 73]))
+
+
+# Unfamiliar problem
+
+def jump(nums: list[int]) -> int:
+    jumps = 0
+    stop_index = 0
+    furthest = 0
+    for i in range(len(nums) - 1):
+        furthest = max(furthest, nums[i] + i)
+        if i == stop_index:
+            jumps += 1
+            stop_index = furthest
+            if stop_index >= len(nums) - 1:
+                break
+    return jumps
+
+
+print(jump([2, 3, 1, 1, 4]))
