@@ -105,3 +105,27 @@ def checkSubarraySum(nums: list[int], k: int) -> bool:
 
 
 print(checkSubarraySum([0], 7))
+
+
+class ListNode:
+    def __init__(self, val: int, next=None):
+        self.val = val
+        self.next = next
+
+
+def merge_two_sorted(head1: ListNode, head2: ListNode) -> ListNode:
+    dummy = ListNode(0)
+    current = dummy
+    while head1 and head2:
+        if head1.val < head2.val:
+            current.next = ListNode(head1.val)
+            head1 = head1.next
+        else:
+            current = ListNode(head2.val)
+            head2 = head2.next
+
+    if head1 is not None:
+        current.next = head1
+    else:
+        current.next = head2
+    return dummy.next
