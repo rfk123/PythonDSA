@@ -18,10 +18,13 @@ class Neet:
     def remove_value(self, val: int) -> bool:
         if val not in self.values:
             return False
+        
         pop_index = self.values[val].pop()
         list_len = len(self.list)
+
         [self.list[pop_index], self.list[list_len - 1]
          ] = [self.list[list_len - 1], self.list[pop_index]]
+        
         self.values[self.list[pop_index]] = pop_index
         self.list.pop()
         del self.values[val]  # O(1)

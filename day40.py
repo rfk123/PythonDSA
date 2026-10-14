@@ -86,3 +86,22 @@ def jump(nums: list[int]) -> int:
 
 
 print(jump([2, 3, 1, 1, 4]))
+
+print(",".isalnum())
+
+
+def checkSubarraySum(nums: list[int], k: int) -> bool:
+    prefix = [0] * (len(nums) + 1)
+    for i in range(len(nums)):
+        prefix[i+1] = prefix[i] + nums[i]
+
+    seen = {}
+    for j in range(len(prefix)):
+        remainder = prefix[j] % k
+        if remainder in seen and (j - seen[remainder]) > 1:
+            return True
+        seen[remainder] = j
+    return False
+
+
+print(checkSubarraySum([0], 7))
