@@ -72,3 +72,61 @@ def rotated_array(nums: list[int], target: int) -> int:
 
 #
 #
+
+
+def daily_temperatures(temperatures: list[int]) -> list[int]:
+    unresolved_days = []
+    days_til_warmer = [0] * len(temperatures)
+    for i, temp in enumerate(temperatures):
+        while unresolved_days and temperatures[unresolved_days[-1]] < temp:
+            prev_day = unresolved_days.pop()
+            days = i - prev_day
+            days_til_warmer[prev_day] = days
+        unresolved_days.append(i)
+    return days_til_warmer
+
+# [75, 71, 69, 72]
+# [0, 2, 1, 0]
+
+# stack, current temp, i,
+
+# [100, 4, 200, 1, 3, 2]
+# { 100, 4, 200, 1, 3, 2 }
+#
+
+
+def longest_consecutive_sequence(nums: list[int]) -> int:
+    max_length = 0
+    distinct_values = set()
+    for num in nums:
+        distinct_values.add(num)
+    for num in nums:
+        if num - 1 not in distinct_values:
+            count = 1
+            temp = num
+            while temp + 1 in distinct_values:
+                count += 1
+                temp += 1
+            max_length = max(max_length, count)
+    return max_length
+
+
+print(longest_consecutive_sequence([1, 2, 2, 3]))
+
+
+def jump(nums: list[int]) -> int:
+    if len(nums) == 1:
+        return 0
+
+    furthest_point = 0
+    current_end = 0
+    jumps = 0
+    for i in range(len(nums) - 1):
+        furthest_point = max(furthest_point, i + nums[i])
+        if current_end == i:
+            current_end = furthest_point
+            jumps += 1
+    return jumps
+
+
+print(jump([2, 3, 1, 1, 4]))
