@@ -27,3 +27,56 @@ def is_balanced(root: TreeNode) -> bool:
     return height(root) != -1
 
 # The time complexity is O(n) and the space complexity is O(1)
+
+
+def min_depth(node: TreeNode) -> int:
+    if not node:
+        return 0
+
+    if not node.left:
+        return 1 + min_depth(node.right)
+
+    if not node.right:
+        return 1 + min_depth(node.left)
+
+    return 1 + min(min_depth(node.left), min_depth(node.right))
+
+
+# Print Nodes in reversed order given the head of a linked list
+
+class Node:
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+
+# Use recursion to print the linked list in reverse order
+# base case is going to be when node == None
+
+
+def reverse(head: Node) -> None:
+    if not head:
+        return
+
+    reverse(head.next)
+    print(head.val)
+
+
+# reverse(head)
+
+
+def f(n: int) -> int:
+    if n == 1:
+        return 1
+    if n == 0:
+        return 0
+
+    return f(n-1) + f(n-2)
+
+
+print(f(4))
