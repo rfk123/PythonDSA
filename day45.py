@@ -80,3 +80,21 @@ def f(n: int) -> int:
 
 
 print(f(4))
+
+
+def find_diameter(node: TreeNode) -> int:
+    max_diameter = 0
+
+    def height(node: TreeNode) -> int:
+        nonlocal max_diameter
+
+        if not node:
+            return 0
+
+        left_height = height(node.left)
+        right_height = height(node.right)
+        max_diameter = max(max_diameter, left_height + right_height)
+
+        return 1 + max(left_height, right_height)
+    height(node)
+    return max_diameter
