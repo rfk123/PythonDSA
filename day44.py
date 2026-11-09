@@ -32,4 +32,28 @@ def contains(root: TreeNode, value: int) -> bool:
     return False
 
 
-print(contains(tree, 11))
+def in_order(root) -> None:
+    if not root:
+        return
+    print(root.val)
+    in_order(root.l_child)
+    in_order(root.r_child)
+
+
+in_order(tree)
+
+print("****************")
+
+
+def pre_order_iterative(root) -> None:
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        print(node.val)
+        if node.r_child:
+            stack.append(node.r_child)
+        if node.l_child:
+            stack.append(node.l_child)
+
+
+pre_order_iterative(tree)
