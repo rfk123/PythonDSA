@@ -108,3 +108,31 @@ def k_most_freq_hm(nums: list[int], target: int) -> list[int]:
 
 print(k_most_freq_hm([1, 2, 1, 2, 1, 2, 3,
       1, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3], 2))
+
+
+class TreeNode:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def path_sum(node: TreeNode, sum: int) -> bool:
+    if not node:
+        return False
+
+    if not node.left and not node.right:
+        return sum == node.val
+
+    return (
+        path_sum(node.left, sum - node.val)
+        or
+        path_sum(node.right, sum - node.val)
+    )
+
+
+"""
+what each recursive call is responsible for: to check if either subtree has a valid path to sum
+why None returns False: None returns false because there is no node 
+why we use or between the left and right recursive calls instead of and: because we just need one path
+"""
