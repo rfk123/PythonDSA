@@ -71,4 +71,40 @@ def longest_consectuive_subarray_with_sum_k(nums: list[int], target: int) -> int
     return max_length
 
 
-print(longest_consectuive_subarray_with_sum_k([-2, -1, 2, 1], 1))
+# print(longest_consectuive_subarray_with_sum_k([-2, -1, 2, 1], 1))
+
+
+def k_most_freq(nums: list[int], target: int) -> list[int]:
+    result = []
+    frequencies = {}
+    for i in range(len(nums)):
+        frequencies[nums[i]] = frequencies.get(nums[i], 0) + 1
+
+    bucket = [[] for _ in range(len(nums) + 1)]
+
+    for key in frequencies:
+        print(frequencies[key])
+        bucket[frequencies[key]].append(key)
+
+    for j in range(len(bucket) - 1, 0, -1):
+        if len(result) >= target:
+            break
+        result.extend(bucket[j])
+
+    return result[:target]
+
+
+# print(k_most_freq([1, 2, 1, 2, 1, 2, 3, 1, 3, 2], 2))
+
+
+def k_most_freq_hm(nums: list[int], target: int) -> list[int]:
+    freqs = {}
+    for i in range(len(nums)):
+        freqs[nums[i]] = freqs.get(nums[i], 0) + 1
+
+    # Our freqeuncy array has been built out and now we just need to sort and slice
+    return sorted(freqs.keys(), key=lambda item: freqs[item], reverse=True)[:target]
+
+
+print(k_most_freq_hm([1, 2, 1, 2, 1, 2, 3,
+      1, 2, 3, 2, 3, 3, 3, 3, 3, 3, 3], 2))
