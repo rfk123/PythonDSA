@@ -97,3 +97,18 @@ def valid_abreviation(word: str, abbr: str) -> bool:
 
 
 print(valid_abreviation('imagination', 'i4nat3'))
+
+
+def num_of_islands(map: list[list[int]]) -> int:
+    """
+    [
+    [1,0,0,1],
+    [1,1,0,0],
+    [0,0,1,0],
+    [0,0,0,0]
+    ]
+
+    output -> 3
+    """
+    island_count = 0
+    

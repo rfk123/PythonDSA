@@ -98,3 +98,14 @@ def find_diameter(node: TreeNode) -> int:
         return 1 + max(left_height, right_height)
     height(node)
     return max_diameter
+
+
+def path_to_sum(root: TreeNode, target: int) -> bool:
+    def is_sum(node: TreeNode, remaining: int) -> bool:
+        if not node:
+            return False
+        if not node.left and not node.right:
+            return node.val == remaining
+
+        is_sum(node.left, target - node.val)
+        is_sum(node.right, target - node.val)
