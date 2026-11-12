@@ -136,3 +136,10 @@ what each recursive call is responsible for: to check if either subtree has a va
 why None returns False: None returns false because there is no node 
 why we use or between the left and right recursive calls instead of and: because we just need one path
 """
+
+
+def lca(node: TreeNode, q: int, p: int) -> TreeNode | None:
+    if not node:
+        return None
+
+    if
