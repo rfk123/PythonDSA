@@ -138,8 +138,22 @@ why we use or between the left and right recursive calls instead of and: because
 """
 
 
-def lca(node: TreeNode, q: int, p: int) -> TreeNode | None:
-    if not node:
-        return None
+# def lca(node: TreeNode, q: int, p: int) -> TreeNode | None:
+#     if not node:
+#         return None
 
-    if
+#     if
+
+
+def rotate_left(s: str, k: int) -> str:
+    if not s:
+        return ""
+    split_point = len(s) - (k % len(s))
+    return s[split_point:] + s[:split_point]
+
+
+print(rotate_left("0123456", 8))
+
+
+# [0,1,2,3,4,5,6]
+#
