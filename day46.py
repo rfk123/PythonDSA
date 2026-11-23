@@ -157,3 +157,54 @@ print(rotate_left("0123456", 8))
 
 # [0,1,2,3,4,5,6]
 #
+
+
+# binary search practice
+# Find if a value exists in the array
+
+def bst(nums: list[int], target: int) -> int:
+    left = 0
+    right = len(nums) - 1
+
+    while left <= right:
+        mid = (right + left) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] > target:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return -1
+
+
+print(bst([0, 1, 2, 3, 4, 7, 10, 11, 13], 3))
+
+
+def expected_index(nums: list[int], target: 9):
+    # Use
+
+    pass
+
+
+class Hash:
+    def __init__(self, size=8):
+        self.size = size
+        self.cells = [[] for _ in range(size)]
+
+    def index(self, key):
+        return sum(ord(c) for c in key) % self.size
+
+    def put(self, key, value):
+        cell = self.cells[self.index(key)]
+        for pair in cell:
+            if pair[0] == key:
+                pair[1] = value
+                return
+        cell.append([key, value])
+
+    def get(self, key):
+        for k, v in self.cells[self.index(key)]:
+            if k == key:
+                return v
+
+        return -1
