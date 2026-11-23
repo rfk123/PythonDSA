@@ -206,5 +206,36 @@ class Hash:
         for k, v in self.cells[self.index(key)]:
             if k == key:
                 return v
+        return None
 
-        return -1
+
+# counting
+# return the character with the highest freqeuncy in the array
+def max_freq(word: str) -> str:
+    frequencies = {}
+    clean_word = "".join(word.split(' '))
+    for char in clean_word:
+        if not char.isalpha():
+            return -1
+        frequencies[char] = frequencies.get(char, 0) + 1
+
+    max_char = None
+    max_freq = 0
+    print(frequencies)
+    for c, f in frequencies.items():
+        if f > max_freq:
+            max_freq = f
+            max_char = c
+
+    return max_char
+
+
+print(max_freq("astronomy rules the world"))
+
+
+def max_freq_quick(frequencies: dict) -> str:
+    return max(frequencies.items(), key=lambda x: x[1])[0]
+
+
+print(max_freq_quick({'a': 1, 's': 2, 't': 2, 'r': 3, 'o': 3, 'n': 1,
+      'm': 1, 'y': 1, 'u': 1, 'l': 2, 'e': 2, 'h': 1, 'w': 1, 'd': 1}))
