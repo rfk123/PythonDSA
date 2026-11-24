@@ -239,3 +239,16 @@ def max_freq_quick(frequencies: dict) -> str:
 
 print(max_freq_quick({'a': 1, 's': 2, 't': 2, 'r': 3, 'o': 3, 'n': 1,
       'm': 1, 'y': 1, 'u': 1, 'l': 2, 'e': 2, 'h': 1, 'w': 1, 'd': 1}))
+
+
+def group_anagrams(words: list[str]) -> list[list[str]]:
+    anagrams = {}
+    for word in words:
+        new_word = "".join(sorted(word))
+        if not new_word in anagrams:
+            anagrams[new_word] = []
+        anagrams[new_word].append(word)
+    return list(anagrams.values())
+
+
+print(group_anagrams(['car', 'rac', 'bik', 'mac', 'cam', 'ball', 'acm']))
