@@ -252,3 +252,21 @@ def group_anagrams(words: list[str]) -> list[list[str]]:
 
 
 print(group_anagrams(['car', 'rac', 'bik', 'mac', 'cam', 'ball', 'acm']))
+
+
+def reverse_span(s: str, left: int, right: int) -> str:
+    if left > 0:
+        return s[:left] + s[right: left - 1: -1] + s[right + 1:]
+    return s[right::-1] + s[right + 1:]
+
+
+# the time complexity is O(n) and space complexity is O(k) where k is the size of the biggest sliced substring from s
+# I believe that the time complexity is O(n) because we go through each element in the original string at most once. The space complexity should be
+# based off of the largest auxiliary added memory which would be the largest substring of size k so O(k). However, it might actually be just O(n) if you
+# add all of the auxiliary memory used together. Time complexity O(n) and space complexity O(n). Final answer.
+
+
+print(reverse_span("abcdefg", 2, 5))    # "abfedcg"
+print(reverse_span("abc", 0, 2))      # "cba"
+print(reverse_span("abc", 1, 1))      # "abc"
+print(reverse_span("python", 1, 4))     # "pohtyn"
