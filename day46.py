@@ -270,3 +270,34 @@ print(reverse_span("abcdefg", 2, 5))    # "abfedcg"
 print(reverse_span("abc", 0, 2))      # "cba"
 print(reverse_span("abc", 1, 1))      # "abc"
 print(reverse_span("python", 1, 4))     # "pohtyn"
+
+
+def compress_runs(s: str) -> str:
+    if not s:
+        return ""
+    result = []
+    left = 0
+    right = 0
+    while right < len(s):
+        if s[left] != s[right]:
+            result.extend([s[left], str(right - left)])
+            left = right
+        right += 1
+    result.extend([s[left], str(right - left)])
+    return "".join(result)
+
+
+print(compress_runs("aaabbc"))    # "a3b2c1"
+print(compress_runs("abcd"))      # "a1b1c1d1"
+print(compress_runs("aaaa"))      # "a4"
+print(compress_runs(""))          # ""
+print(compress_runs("AAaa"))      # "A2a2"
+print(compress_runs("a" * 12))    # "a12"
+
+"""
+Explain why your revised approach has O(n) time and O(n) auxiliary space, including the cost of joining the pieces.
+
+My now advised approach has O(n) time and O(n) auxiliary space. O(n) time because now I am not continuously concatenating strings and instead am adding
+to the end of an array which takes constant time. The join at the end takes O(n) time where n is the size of the array because it puts all of the elements 
+of the array into a string with "" delimiting. The O(n) for space comes from the same reasoning as before except it now represents the size of the result array
+"""
