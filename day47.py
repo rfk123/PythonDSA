@@ -27,15 +27,15 @@ if the token is not an empty string then we can append it to the cleaned list. O
 of the tokens on a singular whitespace. The space complexity is O(n) and the time complexity is also O(n).
 """
 
-print(normalize_msg("  HELLO,\tWorld!!  "))
-print(normalize_msg("Python   IS\nFUN."))
-print(normalize_msg("..."))
-print(normalize_msg("don't !.? STOP!"))
-print(normalize_msg("don't STOP!"))
+# print(normalize_msg("  HELLO,\tWorld!!  "))
+# print(normalize_msg("Python   IS\nFUN."))
+# print(normalize_msg("..."))
+# print(normalize_msg("don't !.? STOP!"))
+# print(normalize_msg("don't STOP!"))
 
-print(normalize_msg("well-done, indeed."))
-print(normalize_msg("Straße, STRASSE"))
-print(normalize_msg(""))
+# print(normalize_msg("well-done, indeed."))
+# print(normalize_msg("Straße, STRASSE"))
+# print(normalize_msg(""))
 """
 Split the input on arbitrary whitespace (including tabs and newlines).
 
@@ -55,3 +55,42 @@ Join the remaining tokens using exactly one ordinary space.
 "Straße, STRASSE"	"strasse strasse"
 ""	""
 """
+
+
+def parse_settings(raw: str) -> list[tuple[str, str]]:
+    settings = raw.split(';')
+    result = []
+    for i in range(len(settings)):
+        # will return a tuple with three elements
+        setting = settings[i].partition('=')
+        if setting[1] == '=':
+            key = setting[0].strip().casefold()
+            if not key:
+                continue
+            val = setting[2].strip()
+            result.append((key, val))
+    return result
+
+
+"""
+I was able to determine if a setting is valid by frist checking if parition had a valid split and then checking if the key was not empty after normalization.
+If both of those things are true then we have a valid setting to include in our result array. partition handles extra = signs since it 
+only splits on the first occurence. This solution is O(n) for both space complexity and time complexity.
+"""
+print(parse_settings(" User = Ada ; token = a=b=c ; invalid ; =oops ; MODE= fast "))
+
+print(parse_settings("X=1;Y=2"))
+print(parse_settings("a=; b = "))
+print(parse_settings("hello; world"))
+print(parse_settings("x=a=b=c"))
+print(parse_settings("a=1;a=2"))
+
+
+'''
+"X=1;Y=2"	[("x", "1"), ("y", "2")]
+"a=; b = "	[("a", ""), ("b", "")]
+"hello; world"	[]
+"x=a=b=c"	[("x", "a=b=c")]
+"a=1;a=2"	[("a", "1"), ("a", "2")]
+"; ; "	[]
+'''
